@@ -1,9 +1,15 @@
 #version 430 core
 
 out vec4 color;
-in vec2 tc;
+in vec4 pos;
 
+layout (location = 4) uniform vec3 objectColor;
+layout (location = 5) uniform vec3 lightColor;
 void main()
 	{
-		color = vec4(0.0, 1.0, 0.0, 1.0);
+		 float ambientStrength = 0.1f;
+    vec3 ambient = ambientStrength * lightColor;
+
+    vec3 result = ambient * objectColor;
+    color = vec4(result, 1.0f);
 	}

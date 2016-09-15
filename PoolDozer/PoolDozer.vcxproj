@@ -71,10 +71,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Biblioteki\glm;C:\Biblioteki\glew-1.13.0\include;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;C:\Biblioteki\glm;C:\Biblioteki\glew-1.13.0\include;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;C:\Biblioteki\glm;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\glew-1.13.0\include;C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -94,7 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x86\debug;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x86\debug;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -110,6 +111,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;PhysX3_64.lib;PhysX3Common_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,14 +152,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="FBXModel.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Configuration.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="FBXModel.h" />
+    <ClInclude Include="ModelsData.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="vertexData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="FS.frag" />
     <Text Include="VS.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LampShader.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
