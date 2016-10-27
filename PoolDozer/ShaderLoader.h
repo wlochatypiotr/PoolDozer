@@ -11,6 +11,7 @@ class ShaderLoader
 public:
 	GLuint Program;
 	// Constructor generates the shader on the fly
+	ShaderLoader() = default; //these is required for unordered ma []operator
 	ShaderLoader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		// 1. Retrieve the vertex/fragment source code from filePath

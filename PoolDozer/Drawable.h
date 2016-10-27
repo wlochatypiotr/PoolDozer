@@ -1,7 +1,5 @@
 #pragma once
-#include "ShaderLoader.h"
-#include "vertexData.h"
-#include "FBXModel.h"
+#include "TinyModel.h"
 class Drawable
 {
 public:

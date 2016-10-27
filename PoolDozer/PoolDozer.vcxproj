@@ -76,6 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;C:\Biblioteki\glm;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\glew-1.13.0\include;C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;$(IncludePath)</IncludePath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -154,23 +155,34 @@
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Drawable.cpp" />
-    <ClCompile Include="FBXModel.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OBJModel.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="TinyModel.cpp" />
+    <ClCompile Include="tiny_obj_loader.cc" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Drawable.h" />
-    <ClInclude Include="FBXModel.h" />
-    <ClInclude Include="ModelsData.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="OBJModel.h" />
+    <ClInclude Include="PhysXWorld.h" />
+    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="TinyModel.h" />
+    <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="vertexData.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="FS.frag" />
+    <Text Include="SimpleVS.frag" />
     <Text Include="VS.frag" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LampShader.frag" />
+    <None Include="SimpleFS.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

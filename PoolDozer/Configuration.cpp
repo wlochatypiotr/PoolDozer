@@ -1,5 +1,9 @@
 #include "Configuration.h"
 
+unsigned Configuration::m_threadsNumber;
+
+ShaderManager Configuration::m_shaders;
+
 glm::mat4 Configuration::m_view = glm::mat4();
 glm::mat4 Configuration::m_projection = glm::mat4();
 glm::mat4 Configuration::m_boardModel = glm::mat4();
@@ -8,8 +12,13 @@ glm::mat4 Configuration::m_lampModel = glm::mat4();
 glm::vec3 Configuration::m_boardColor;
 glm::vec3 Configuration::m_lightColor;
 
+glm::vec3 Configuration::m_lightPosition;
+
 GLuint Configuration::m_screenHeight;
 GLuint Configuration::m_screenWidth;
+
+
+
 
 bool Configuration::m_keys[1024];
 
@@ -17,29 +26,47 @@ GLFWwindow* Configuration::m_window = nullptr;
 
 void Configuration::Initialize()
 {
+	m_threadsNumber = std::thread::hardware_concurrency();
+
 	InitializeGLFW();
-	InitializeMarices();
 	InitializeColors();
+	InitializeMarices();
 	InitializeOpenGL();
+	InitializeShaders();
+}
+
+void Configuration::InitializeShaders()
+{
+	m_shaders.Load(Configuration::Shaders::LAMP_SHADER, ShaderLoader ("VS.frag", "LampShader.frag"));
+	m_shaders.Load(Configuration::Shaders::TABLE_SHADER, ShaderLoader ("VS.frag", "FS.frag"));
 }
 
 void Configuration::InitializeMarices()
 {
-	m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -2.5f));
+	m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -2.6f));
+	m_view = glm::rotate(m_view, glm::radians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	m_projection = glm::perspective(glm::radians(45.0f), (GLfloat)m_screenWidth / (GLfloat)m_screenHeight, 0.1f, 100.0f);
 
-	m_boardModel = glm::rotate(m_boardModel, glm::radians(135.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_boardModel = glm::translate(m_boardModel, glm::vec3(0.0f, 0.0f, -1.20f));
+	//m_boardModel = glm::rotate(m_boardModel, glm::radians(135.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	//m_boardModel = glm::translate(m_boardModel, glm::vec3(0.0f, -50.0f, 5.0f));
+
+	m_boardModel = glm::rotate(m_boardModel, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	m_boardModel = glm::translate(m_boardModel, glm::vec3(0.0f, -1.0f, -1.40f));
+	m_boardModel = glm::scale(m_boardModel, glm::vec3(1.0f, 1.0f, 1.0f));
 
 	m_lampModel = glm::scale(m_lampModel, glm::vec3(0.5f, 0.5f, 0.5f));
-	m_lampModel = glm::translate(m_lampModel, glm::vec3(8.0f, 4.0f, -10.0f));
-	m_lampModel = glm::rotate(m_lampModel, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	m_lampModel = glm::translate(m_lampModel, m_lightPosition);
+	m_lampModel = glm::rotate(m_lampModel, glm::radians(95.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Configuration::InitializeColors()
 {
-	m_boardColor = glm::vec3 (0.663f, 0.663f, 0.663f);
+	m_boardColor = glm::vec3 (0.902, 0.902, 0.980);
 	m_lightColor = glm::vec3 (1.0f, 1.0f, 1.0f);
+
+	//positions
+	m_lightPosition = glm::vec3(0.0f, 1.0f, -5.0f);
+
 }
 
 void Configuration::InitializeGLFW()
@@ -72,8 +99,11 @@ void Configuration::InitializeOpenGL()
 {
 	glViewport(0, 0, m_screenWidth, m_screenHeight);
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
+	//glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
+	glDisable(GL_TEXTURE_2D);
+	//glCullFace(GL_BACK_RIGHT);
 }
 
 void Configuration::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)

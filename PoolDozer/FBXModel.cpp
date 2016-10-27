@@ -2,11 +2,13 @@
 
 FBXModel::FBXModel(const std::string & filePath, ShaderLoader& programName) : m_fileName(filePath.c_str())
 {
-	
 	LoadScene();
+	auto  matrix = m_fbxScene->GetRootNode()->EvaluateGlobalTransform();
+	auto  matrixL = m_fbxScene->GetRootNode()->EvaluateLocalTransform();
 	setProgram(programName);
 	//glGenVertexArrays(1, &VAO);
 	//glBindVertexArray(VAO);
+	matrix = m_fbxScene->GetRootNode()->EvaluateGlobalTransform();
 	LoadNode(m_fbxScene->GetRootNode());
 
 	/*FbxArray<FbxTexture*>  textures;
@@ -96,6 +98,7 @@ void FBXModel::LoadNode(FbxNode * fbxNode)
 void FBXModel::LoadMesh(FbxMesh * fbxMesh)
 {
 	// Load Vertices
+	FbxMatrix globalTransform = fbxMesh->GetNode()->EvaluateGlobalTransform();;
 	m_numbVerts += fbxMesh->GetControlPointsCount();
 	const int numVertices = fbxMesh->GetControlPointsCount();
 	auto vertices =  new vertexData[numVertices];
@@ -142,9 +145,11 @@ void FBXModel::LoadMesh(FbxMesh * fbxMesh)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshData.numIndices, indices, GL_STATIC_DRAW);
 
 	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 9 * sizeof(GLfloat), (GLvoid*)0);
-	glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)3);	//texture cordinates
+	glVertexAttribPointer(Configuration::m_vertexAttributes::VERTEX_POSITION, 3, GL_FLOAT, GL_TRUE, 9 * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(Configuration::m_vertexAttributes::VERTEX_NORMAL, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	//glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)3);	//texture cordinates
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
 	meshData.VBO = std::move(VBO);
@@ -187,6 +192,7 @@ void FBXModel::LoadUVs(FbxMesh * fbxMesh, vertexData* VertexData)
 void FBXModel::LoadNormals(FbxMesh * fbxMesh, vertexData * VertexData)
 {
 	FbxGeometryElementNormal* meshNormal = fbxMesh->GetElementNormal();
+	meshNormal->SetReferenceMode(FbxGeometryElementNormal::eDirect);
 	meshNormal->SetMappingMode(FbxGeometryElement::eByControlPoint);
 	for (int vertexIndex = 0; vertexIndex != fbxMesh->GetControlPointsCount(); ++vertexIndex)
 	{
@@ -544,12 +550,20 @@ void FBXModel::LoadScene()
 	m_fbxGeometryConverter->SplitMeshesPerMaterial(m_fbxScene, true);
 	if (m_fbxGeometryConverter->SplitMeshesPerMaterial(m_fbxScene, true))
 		std::cout << "Mesh conversion complete ! \n";
+
+
 	// Import the contents of the file into the scene.
 	lImporter->Import(m_fbxScene);
 
+	///////////////////////////////////////
+	//int up;
+	//auto curr = m_fbxScene->GetGlobalSettings().GetAxisSystem().GetUpVector(up);
+
+	//FbxAxisSystem axisSystem = FbxAxisSystem::OpenGL;
+	//axisSystem.ConvertScene(m_fbxScene);
+	//////////////////////////////////////////////
 
 	// The file is imported, so get rid of the importer.
-	lImporter->Destroy();
 	//cene->FillTextureArray()
 	fbxsdk::FbxArray<FbxTexture*> textures;
 	m_fbxScene->FillTextureArray(textures);
@@ -572,19 +586,21 @@ void FBXModel::Draw()
 void FBXModel::Draw(const glm::mat4 &model, const glm::mat4 &view, const glm::mat4 &projection, const glm::vec3 &color, const glm::vec3 &lightcolor)
 {
 	glUseProgram(m_program->Program);
-	glUniformMatrix4fv(1, 1, GL_FALSE, glm::value_ptr(model));
-	glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(Configuration::m_vertexAttributes::MODEL_MATRIX, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(Configuration::m_vertexAttributes::VIEW_MATRIX, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(Configuration::m_vertexAttributes::PROJECTION_MATRIX, 1, GL_FALSE, glm::value_ptr(projection));
 	//color
-	glUniform3f(4, color.x, color.y, color.z);
+	glUniform3f(Configuration::m_vertexAttributes::OBJECT_COLOR, color.x, color.y, color.z);
 	//light color
-	glUniform3f(5, lightcolor.x, lightcolor.y, lightcolor.z);
+	glUniform3f(Configuration::m_vertexAttributes::LIGHT_COLOR, lightcolor.x, lightcolor.y, lightcolor.z);
+	//light pos (cube)
+	glUniform3f(Configuration::m_vertexAttributes::LIGHT_SOURCE_POS, Configuration::m_lightPosition.x, Configuration::m_lightPosition.y, Configuration::m_lightPosition.z);
 
 	for (auto c : m_renderingData)
 	{
 		glBindVertexArray(c.VAO);
 
-		glDrawElements(GL_LINES, c.numIndices, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, c.numIndices, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_POINTS, 0, c.numVertices);
 		glBindVertexArray(0);
 	}

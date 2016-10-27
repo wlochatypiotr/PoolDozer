@@ -19,6 +19,13 @@ struct vertexData
 	float nw;
 };
 
+struct uintx3
+{
+	unsigned int x;
+	unsigned int y;
+	unsigned int z;
+};
+
 struct floatx3
 {
 	float x;

@@ -8,6 +8,7 @@
 #include "vertexData.h"
 #include "GL/glew.h"
 #include "ShaderLoader.h"
+#include "Configuration.h"
 //#include <unordered_map>
 //#include <algorithm>
 
