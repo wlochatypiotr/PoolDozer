@@ -13,7 +13,6 @@ public:
 	void AddEntity(TinyModel* entity);
 	void Update(GLfloat deltaTime);
 	void Draw();
-	void ProcessInput();
 
 	std::list<TinyModel*> m_entities;
 	glm::vec3 m_playerPosition;

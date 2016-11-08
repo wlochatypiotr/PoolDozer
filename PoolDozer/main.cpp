@@ -4,8 +4,7 @@
 #include "Configuration.h"
 #include "TinyModel.h"
 #include "World.h"
-//#include "PhysXWorld.h"
-#include "PxPhysicsAPI.h"
+#include "PhysXWorld.h"
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -14,17 +13,11 @@ int main()
 {
 	
 	Configuration::Initialize();
-
 	//init PhysX
-	//static physx::PxDefaultErrorCallback gDefaultErrorCallback;
-	//static physx::PxDefaultAllocator gDefaultAllocatorCallback;
+	PhysXWorld pworld;
+	pworld.InitializePhysX();
+	pworld.InitializeScene();
 
-	//physx::PxFoundation* mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
-	//	gDefaultErrorCallback);
-	//if (!mFoundation)
-	//	gDefaultErrorCallback.reportError(physx::PxErrorCode::eABORT,"PxCreateFoundation failed!",__FILE__, __LINE__);
-	//
-	//coœ nie dzia³a ze œwiatem !?
 	World m_World;
 
 	//Shaders and program
@@ -64,7 +57,8 @@ int main()
 		lastFrame = currentFrame;
 
 		// process events
-		glfwPollEvents();
+		Configuration::m_inputManager.ProcessInput();
+		//glfwPollEvents();
 		//wordl.ProcessInput
 		//world.Update()
 		

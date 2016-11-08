@@ -108,12 +108,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;PhysX3_64.lib;PhysX3Common_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib\vc14win64;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;PhysX3_x64.lib;PhysX3CHECKED_x64.lib;PhysX3Common_x64.lib;PhysX3CommonCHECKED_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,9 +155,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
-    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OBJModel.cpp" />
+    <ClCompile Include="PhysXWorld.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="TinyModel.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
@@ -164,9 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h" />
-    <ClInclude Include="Drawable.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="OBJModel.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="PhysXWorld.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderLoader.h" />

@@ -3,6 +3,7 @@
 unsigned Configuration::m_threadsNumber;
 
 ShaderManager Configuration::m_shaders;
+InputManager Configuration::m_inputManager;
 
 glm::mat4 Configuration::m_view = glm::mat4();
 glm::mat4 Configuration::m_projection = glm::mat4();
@@ -20,7 +21,7 @@ GLuint Configuration::m_screenWidth;
 
 
 
-bool Configuration::m_keys[1024];
+//bool Configuration::m_keys[1024];
 
 GLFWwindow* Configuration::m_window = nullptr;
 
@@ -29,6 +30,7 @@ void Configuration::Initialize()
 	m_threadsNumber = std::thread::hardware_concurrency();
 
 	InitializeGLFW();
+	InitializeInputManager();
 	InitializeColors();
 	InitializeMarices();
 	InitializeOpenGL();
@@ -37,8 +39,8 @@ void Configuration::Initialize()
 
 void Configuration::InitializeShaders()
 {
-	m_shaders.Load(Configuration::Shaders::LAMP_SHADER, ShaderLoader ("VS.frag", "LampShader.frag"));
-	m_shaders.Load(Configuration::Shaders::TABLE_SHADER, ShaderLoader ("VS.frag", "FS.frag"));
+	m_shaders.Load(Configuration::Shaders::LAMP_SHADER, Shader ("VS.frag", "LampShader.frag"));
+	m_shaders.Load(Configuration::Shaders::TABLE_SHADER, Shader ("VS.frag", "FS.frag"));
 }
 
 void Configuration::InitializeMarices()
@@ -90,8 +92,12 @@ void Configuration::InitializeGLFW()
 		//return -1;
 		//throw some exception ?
 	}
-	//register callback functions
-	glfwSetKeyCallback(m_window, KeyCallback);
+}
+
+void Configuration::InitializeInputManager()
+{
+	m_inputManager.m_window = m_window;
+	glfwSetKeyCallback(m_window, m_inputManager.KeyCallback);
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
@@ -100,21 +106,19 @@ void Configuration::InitializeOpenGL()
 	glViewport(0, 0, m_screenWidth, m_screenHeight);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	//glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glDisable(GL_TEXTURE_2D);
-	//glCullFace(GL_BACK_RIGHT);
 }
 
-void Configuration::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
-{
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
-	if (key >= 0 && key < 1024)
-	{
-		if (action == GLFW_PRESS)
-			m_keys[key] = true;
-		else if (action == GLFW_RELEASE)
-			m_keys[key] = false;
-	}
-}
+//void Configuration::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
+//{
+//	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+//		glfwSetWindowShouldClose(window, GL_TRUE);
+//	if (key >= 0 && key < 1024)
+//	{
+//		if (action == GLFW_PRESS)
+//			m_keys[key] = true;
+//		else if (action == GLFW_RELEASE)
+//			m_keys[key] = false;
+//	}
+//}

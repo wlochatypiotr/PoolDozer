@@ -7,6 +7,7 @@
 #include <iostream>
 #include <thread>
 #include "ShaderManager.h"
+#include "InputManager.h"
 #include "ShaderLoader.h"
 
 class Configuration
@@ -21,6 +22,7 @@ public:
 
 	//managers
 	static ShaderManager m_shaders;
+	static InputManager m_inputManager;
 
 	enum Shaders
 	{
@@ -62,9 +64,10 @@ public:
 	static void InitializeMarices();
 	static void InitializeColors();
 	static void InitializeGLFW();
+	static void InitializeInputManager();
 	static void InitializeOpenGL();
 
-	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+	//static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-	static bool m_keys[1024];
+	//static bool m_keys[1024];
 };

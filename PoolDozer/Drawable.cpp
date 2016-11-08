@@ -1,6 +1,6 @@
 #include "Drawable.h"
 
-Drawable::Drawable(ShaderLoader& programName, GLfloat* vertices, GLuint numbVerts, GLuint* indices, GLuint numbIndices) :m_verticesNumber(numbVerts), m_indicesNumber(numbIndices), m_useEBO(true)
+Drawable::Drawable(Shader& programName, GLfloat* vertices, GLuint numbVerts, GLuint* indices, GLuint numbIndices) :m_verticesNumber(numbVerts), m_indicesNumber(numbIndices), m_useEBO(true)
 {
 	m_program = &programName;
 	//set up data for rendering
@@ -23,7 +23,7 @@ Drawable::Drawable(ShaderLoader& programName, GLfloat* vertices, GLuint numbVert
 
 }
 
-Drawable::Drawable(ShaderLoader & programName, GLfloat* vertices, GLuint numbVerts) : m_verticesNumber(numbVerts), m_useEBO(false)
+Drawable::Drawable(Shader & programName, GLfloat* vertices, GLuint numbVerts) : m_verticesNumber(numbVerts), m_useEBO(false)
 {
 	m_program = &programName;
 	//set up data for rendering

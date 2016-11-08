@@ -18,7 +18,7 @@ struct RenderingData
 class TinyModel
 {
 public:
-	TinyModel(const char *filename, ShaderLoader& program, glm::mat4 * model, glm::mat4  * view, glm::mat4 * projection, glm::vec3 * color, glm::vec3 * lightColor, glm::vec3 * lightPosition);
+	TinyModel(const char *filename, Shader& program, glm::mat4 * model, glm::mat4  * view, glm::mat4 * projection, glm::vec3 * color, glm::vec3 * lightColor, glm::vec3 * lightPosition);
 	TinyModel(const TinyModel&) = delete;
 	TinyModel& operator= (const TinyModel&) = delete;
 	~TinyModel();
@@ -40,7 +40,7 @@ public:
 
 	std::vector<RenderingData> m_renderingData;
 
-	ShaderLoader * m_program;
+	Shader * m_program;
 
 private:
 	void LoadMesh();

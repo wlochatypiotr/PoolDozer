@@ -10,8 +10,8 @@ public:
 	ShaderManager& operator=(const ShaderManager&) = delete;
 	ShaderManager();
 
-	ShaderLoader& Get(const int& id);
-	void Load(const int& id, ShaderLoader shader);
+	Shader& Get(const int& id);
+	void Load(const int& id, Shader shader);
 private:
-	std::unordered_map <int, ShaderLoader > m_map;
+	std::unordered_map <int, Shader > m_map;
 };
