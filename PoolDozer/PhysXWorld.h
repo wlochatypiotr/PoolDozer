@@ -1,5 +1,5 @@
 #pragma once
-#include "PxPhysicsAPI.h"
+#include "PhysX/PxPhysicsAPI.h"
 #include <iostream>
 
 using namespace physx;

@@ -71,11 +71,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;C:\Biblioteki\glm;C:\Biblioteki\glew-1.13.0\include;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;C:\Biblioteki\glm;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Biblioteki\glfw-3.1.2.bin.WIN32\include;C:\Biblioteki\glew-1.13.0\include;C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\include;C:\Biblioteki\glm;C:\Biblioteki\Simple OpenGL Image Library\src;C:\Biblioteki\glew-1.13.0\include;C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Include;$(IncludePath)</IncludePath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,14 +90,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;FBXSDK_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x86\debug;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;PhysX3DEBUG_x86.lib;PhysX3CommonDEBUG_x86.lib;PhysX3ExtensionsDEBUG.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,7 +115,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\wloch\Source\Repos\PhysX-3.3\PhysXSDK\Lib\vc14win64;C:\Biblioteki\Simple OpenGL Image Library\projects\VC9\Debug;C:\Biblioteki\glew-1.13.0\lib\Release\Win32;C:\Biblioteki\glfw-3.1.2.bin.WIN32\lib-vc2015;C:\Program Files\Autodesk\FBX\FBX SDK\2016.1.2\lib\vs2015\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;PhysX3_x64.lib;PhysX3CHECKED_x64.lib;PhysX3Common_x64.lib;PhysX3CommonCHECKED_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libfbxsdk.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

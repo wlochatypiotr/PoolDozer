@@ -39,8 +39,8 @@ void Configuration::Initialize()
 
 void Configuration::InitializeShaders()
 {
-	m_shaders.Load(Configuration::Shaders::LAMP_SHADER, Shader ("VS.frag", "LampShader.frag"));
-	m_shaders.Load(Configuration::Shaders::TABLE_SHADER, Shader ("VS.frag", "FS.frag"));
+	m_shaders.Load(Configuration::Shaders::LAMP_SHADER, Shader ("shaders/VS.frag", "shaders/LampShader.frag"));
+	m_shaders.Load(Configuration::Shaders::TABLE_SHADER, Shader ("shaders/VS.frag", "shaders/FS.frag"));
 }
 
 void Configuration::InitializeMarices()

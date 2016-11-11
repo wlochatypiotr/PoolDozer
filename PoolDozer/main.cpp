@@ -1,6 +1,3 @@
-#include "log.h"
-#include "Drawable.h"
-#include "ModelsData.h"
 #include "Configuration.h"
 #include "TinyModel.h"
 #include "World.h"
@@ -26,7 +23,7 @@ int main()
 	//ShaderLoader BoardShader("VS.frag", "FS.frag");
 	//ShaderLoader LampShader("VS.frag", "LampShader.frag");
 
-	TinyModel Lamp("Models/Cube.obj"
+	TinyModel Lamp("models/Cube.obj"
 		, Configuration::m_shaders.Get(Configuration::Shaders::LAMP_SHADER)
 		, &Configuration::m_lampModel
 		, &Configuration::m_view
@@ -35,7 +32,7 @@ int main()
 		, &Configuration::m_lightColor
 		, &Configuration::m_lightPosition);
 
-	TinyModel Tab("Models/PoolTable.obj"
+	TinyModel Tab("models/PoolTable.obj"
 		, Configuration::m_shaders.Get(Configuration::Shaders::TABLE_SHADER)
 		, &Configuration::m_boardModel
 		, &Configuration::m_view
