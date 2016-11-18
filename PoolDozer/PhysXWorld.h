@@ -8,15 +8,19 @@ class PhysXWorld
 {
 public:
 
- 	void InitializePhysX();
-	void InitializeScene();
+	PhysXWorld();
+	~PhysXWorld();
+
+	void StartUp();
+	void ShutDown();
+
 
 	//default callback
-	static PxDefaultErrorCallback m_errorCallback;
+	PxDefaultErrorCallback m_errorCallback;
 	//default allocator
-	static PxDefaultAllocator m_allocatoraCallback;
+	PxDefaultAllocator m_allocatorCallback;
 
-	static PxFoundation* m_foundation;
-	static PxPhysics* m_physics;
-	static PxScene* m_scene;
+	PxFoundation* m_foundation = nullptr;
+	PxPhysics* m_physics = nullptr;
+	PxScene* m_scene = nullptr;
 };

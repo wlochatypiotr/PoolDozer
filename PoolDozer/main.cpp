@@ -11,9 +11,8 @@ int main()
 	
 	Configuration::Initialize();
 	//init PhysX
-	PhysXWorld pworld;
-	pworld.InitializePhysX();
-	pworld.InitializeScene();
+	PhysXWorld physXworld;
+	physXworld.StartUp();
 
 	World m_World;
 
@@ -70,6 +69,7 @@ int main()
 		glfwSwapBuffers(Configuration::m_window);
 	}
 	glfwTerminate();
+	physXworld.ShutDown();
 	return 0;
 }
 
