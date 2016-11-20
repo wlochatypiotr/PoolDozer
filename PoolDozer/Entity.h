@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
 #include <map>
+#include <memory>
 #include "EntityComponent.h"
 
-using entityIdType = std::string;
+//using entityIdType = std::string;
 //using componentTableType = std::map<const entityIdType, CEntityComponent*>;
 
 struct Transform {
@@ -13,22 +14,23 @@ struct Transform {
 class CEntity
 {
 public:
-	CEntity(const entityIdType& id);
+	using entity_id_t = std::string;
+	CEntity(const entity_id_t& id);
 
 	const Transform& GetTransform() const { return m_transform; }
 	void SetTransform(const Transform& xform) { m_transform = xform; }
-	const entityIdType& GetID() const { return m_entityID; }
-	void SetID(const entityIdType& id) { m_entityID = id; }
+	const entity_id_t& GetID() const { return m_entityID; }
+	void SetID(const entity_id_t& id) { m_entityID = id; }
 
-	CEntityComponent* GetEntityComponent(const entityIdType& familyID);
+	CEntityComponent* GetEntityComponent(const entity_component_id_t& familyID);
 	CEntityComponent* SetEntityComponent(CEntityComponent* newEntityComponent);
 	void ClearComponents();
 
 private:
 	Transform m_transform;
-	entityIdType m_entityID;
+	entity_id_t m_entityID;
 
-	using componentTableType = std::map<const CEntityComponent::entityComponentIdType, CEntityComponent*>;
+	using componentTableType = std::map<const entity_component_id_t, CEntityComponent* >;
 
 	componentTableType m_components; //map of all the components;
 };

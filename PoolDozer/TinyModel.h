@@ -32,9 +32,9 @@ public:
 	std::string m_err;
 
 	//openGl data
-	GLuint m_VBO;
-	GLuint m_EBO;
-	GLuint m_VAO;
+	//GLuint m_VBO;
+	//GLuint m_EBO;
+	//GLuint m_VAO;
 	unsigned m_numVertices;
 	unsigned m_numIndices;
 

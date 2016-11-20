@@ -2,6 +2,7 @@
 #include "TinyModel.h"
 #include "World.h"
 #include "PhysXWorld.h"
+#include "Entity.h"
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -15,7 +16,7 @@ int main()
 	physXworld.StartUp();
 
 	World m_World;
-
+	CEntity dice("dice");
 	//Shaders and program
 
 
