@@ -2,13 +2,16 @@
 #include <string>
 #include <map>
 #include <memory>
+//#include "Renderer.h"
 #include "EntityComponent.h"
 
-//using entityIdType = std::string;
-//using componentTableType = std::map<const entityIdType, CEntityComponent*>;
+class Renderer;
+using entity_id_t = std::string;
+//using componentTableType = std::map<const entity_id_t, CEntityComponent*>;
 
 struct Transform {
 	int m_position[4];
+	int m_rotation[3]; // x, y, z rotations
 };
 
 class CEntity

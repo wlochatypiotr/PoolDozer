@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
-#include"Entity.h"
+//#include"Entity.h"
 //for rendering data 
 #include "TinyModel.h"
+//#include "Renderer.h"
 
 using entity_component_id_t = std::string;
 class CEntity;
@@ -37,6 +38,11 @@ public:
 		return entity_component_id_t("ECVisual");
 	}
 	virtual void Render() const = 0;
+
+private:
+	void SetColor(const float& r, const float& g, const float& b, const float& a);
+	float m_color[4];
+
 };
 
 //Spherical entity visual component
@@ -68,7 +74,8 @@ public:
 	}
 	virtual void Render() const;
 
-	CECVisualMesh(const std::vector<RenderingData> &mesh);
+	//CECVisualMesh(const std::vector<RenderingData> &mesh);
+	void SetMesh(const std::vector<RenderingData> &mesh);
 
 private:
 	std::vector<RenderingData> m_mesh;

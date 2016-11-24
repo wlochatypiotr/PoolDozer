@@ -3,6 +3,7 @@
 #include "World.h"
 #include "PhysXWorld.h"
 #include "Entity.h"
+#include "Renderer.h"
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -16,6 +17,8 @@ int main()
 	physXworld.StartUp();
 
 	World m_World;
+	Renderer renderer;
+	renderer.Initialize(Configuration::m_projection, Configuration::m_view, Configuration::m_shaders.Get(1));
 	CEntity dice("dice");
 	//Shaders and program
 
