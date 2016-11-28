@@ -15,8 +15,8 @@ public:
 	CEntityComponent() : m_owner(nullptr) {}
 	virtual ~CEntityComponent() = 0 {}
 
-	virtual const entity_component_id_t& ComponentID() const = 0;
-	virtual const entity_component_id_t& FamilyID() const = 0;
+	virtual const entity_component_id_t ComponentID() const = 0;
+	virtual const entity_component_id_t FamilyID() const = 0;
 
 	virtual void Update() {};
 
@@ -33,15 +33,17 @@ class CECVisual : public CEntityComponent
 {
 	//common interface
 public:
-	virtual const entity_component_id_t& FamilyID() const
+	virtual const entity_component_id_t FamilyID() const
 	{
 		return entity_component_id_t("ECVisual");
 	}
-	virtual void Render() const = 0;
+	//virtual void Render() const = 0;
 
-private:
-	void SetColor(const float& r, const float& g, const float& b, const float& a);
-	float m_color[4];
+
+	void SetColor(const float& r, const float& g, const float& b);
+	void SetProgram( Shader& program);
+	glm::vec3 m_color;
+	Shader * m_program = nullptr;
 
 };
 
@@ -49,12 +51,12 @@ private:
 class CECVisualSphere : public CECVisual
 {
 public:
-	virtual const entity_component_id_t& ComponentID() const
+	virtual const entity_component_id_t ComponentID() const
 	{
 		return entity_component_id_t("ECVisualSphere");
 	}
 
-	virtual void Render() const;
+	//virtual void Render() const;
 
 	CECVisualSphere(float radius);
 
@@ -68,15 +70,15 @@ private:
 class CECVisualMesh : public CECVisual
 {
 public:
-	virtual const entity_component_id_t& ComponentID() const
+	virtual const entity_component_id_t ComponentID() const
 	{
 		return entity_component_id_t("ECVisualMesh");
 	}
-	virtual void Render() const;
+	//virtual void Render() const;
 
 	//CECVisualMesh(const std::vector<RenderingData> &mesh);
 	void SetMesh(const std::vector<RenderingData> &mesh);
 
-private:
+//private:
 	std::vector<RenderingData> m_mesh;
 };

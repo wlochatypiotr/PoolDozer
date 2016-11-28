@@ -20,7 +20,7 @@ public:
 
 	void DrawMesh(CEntity * entity);
 private:
-	mat4 m_view;
-	mat4 m_projection;
+	mat4 m_view;// = nullptr;
+	mat4 m_projection;// = nullptr;
 	Shader m_program;
 };

@@ -10,8 +10,9 @@ using entity_id_t = std::string;
 //using componentTableType = std::map<const entity_id_t, CEntityComponent*>;
 
 struct Transform {
-	int m_position[4];
-	int m_rotation[3]; // x, y, z rotations
+	glm::vec3 m_position;
+	glm::vec3 m_rotation; // x, y, z rotations
+	glm::vec3 m_scale;
 };
 
 class CEntity
