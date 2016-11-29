@@ -13,9 +13,6 @@ void CECVisual::SetProgram(Shader &program)
 	m_program = &program;
 }
 
-//void CECVisualMesh::Render() const
-//{
-//}
 
 void CECVisualMesh::SetMesh(const std::vector<RenderingData>& mesh)
 {

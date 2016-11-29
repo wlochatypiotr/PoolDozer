@@ -18,8 +18,11 @@ public:
 	void SetProjectionMatrix(const mat4& proj);
 	void SetProgram(const Shader& shader);
 
-	void DrawMesh(CEntity * entity);
+	//void DrawMesh(CECVisualMesh* mesh);
+	void Draw(CEntity * entity);
 private:
+	//overloads on DrawComponent
+	void DrawComponent(CECVisualMesh* mesh);
 	mat4 m_view;// = nullptr;
 	mat4 m_projection;// = nullptr;
 	Shader m_program;
