@@ -25,7 +25,7 @@ int main()
 	//set transform
 	Transform dick;
 	dick.m_position = Configuration::m_lightPosition; //{ 0.0f, 1.0f, -5.0f};
-	dick.m_rotation = { 0.0f, 95.0f, 0.0f };
+	dick.m_rotation = { 0.0f, 0.0f, 0.0f };
 	dick.m_scale = { 0.5f, 0.5f, 0.5f };
 	dice.SetTransform(dick);
 
@@ -85,6 +85,8 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		//now Entity has to have method update which will call Update on all entities
+		cubeMesh.Update();
 		renderer.Draw(&dice);
 
 		//m_World.Draw();

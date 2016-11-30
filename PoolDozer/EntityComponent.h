@@ -37,12 +37,13 @@ public:
 	{
 		return entity_component_id_t("ECVisual");
 	}
-	//virtual void Render() const = 0;
+	virtual void Update() override;
 
 
 	void SetColor(const float& r, const float& g, const float& b);
 	void SetProgram( Shader& program);
 	glm::vec3 m_color;
+	glm::mat4 m_model;
 	Shader * m_program = nullptr;
 
 };
