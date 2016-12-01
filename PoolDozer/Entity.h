@@ -2,17 +2,17 @@
 #include <string>
 #include <map>
 #include <memory>
-//#include "Renderer.h"
 #include "EntityComponent.h"
 
+using namespace glm;
 class Renderer;
 using entity_id_t = std::string;
-//using componentTableType = std::map<const entity_id_t, CEntityComponent*>;
+
 
 struct Transform {
-	glm::vec3 m_position;
-	glm::vec3 m_rotation; // x, y, z rotations
-	glm::vec3 m_scale;
+	vec3 m_position;
+	vec3 m_rotation; // x, y, z rotations
+	vec3 m_scale;
 };
 
 class CEntity
@@ -21,10 +21,20 @@ public:
 	using entity_id_t = std::string;
 	CEntity(const entity_id_t& id);
 
-	const Transform& GetTransform() const { return m_transform; }
-	void SetTransform(const Transform& xform) { m_transform = xform; }
-	const entity_id_t& GetID() const { return m_entityID; }
-	void SetID(const entity_id_t& id) { m_entityID = id; }
+	const Transform& GetTransform() const;
+	void SetTransform(const Transform& xform);
+	void SetPosition(const vec3& pos);
+	void SetRotation(const vec3& rot);
+	void SetRotation(const float& x, const float& y, const float& z);
+	void SetScale(const vec3& scale);
+	void SetScale(const float& uniformScale);
+	const entity_id_t& GetID() const;
+	void SetID(const entity_id_t& id);
+
+	//This function will update all Entity components
+	//TODO: 
+	//add time as argument for use of some components
+	void Update();
 
 	CEntityComponent* GetEntityComponent(const entity_component_id_t& familyID);
 	CEntityComponent* SetEntityComponent(CEntityComponent* newEntityComponent);

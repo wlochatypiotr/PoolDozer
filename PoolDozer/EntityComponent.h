@@ -1,10 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-//#include"Entity.h"
-//for rendering data 
 #include "TinyModel.h"
-//#include "Renderer.h"
+
 
 using entity_component_id_t = std::string;
 class CEntity;

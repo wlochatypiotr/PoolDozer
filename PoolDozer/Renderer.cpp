@@ -36,15 +36,17 @@ void Renderer::DrawComponent(CECVisualMesh * mesh)
 		glUseProgram(m_program.Program);
 
 	//hardcoede matrix uniform location
-	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(mesh->m_model));
-	glUniformMatrix4fv(4, 1, GL_FALSE, glm::value_ptr(m_view));
-	glUniformMatrix4fv(5, 1, GL_FALSE, glm::value_ptr(m_projection));
+	glUniformMatrix4fv(EUniformEnum::MODEL_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(mesh->m_model));
+	glUniformMatrix4fv(EUniformEnum::VIEW_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(m_view));
+	glUniformMatrix4fv(EUniformEnum::PROJECTION_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(m_projection));
 
-	//glUniform3f(6, component->m_color.x, component->m_color.y, component->m_color.z);
+	glUniform3f(EUniformEnum::OBJECT_COLOR_VEC3, mesh->m_color.x, mesh->m_color.y, mesh->m_color.z);
 
-	//glUniform3f(Configuration::m_vertexAttributes::LIGHT_COLOR, component->m_color.x, component->m_color.y, component->m_color.z);
-	//light pos (cube)
-	//glUniform3f(Configuration::m_vertexAttributes::LIGHT_SOURCE_POS, component->m_color.x, component->m_color.y, component->m_color.z);
+	//this uniform have use for light source
+	//glUniform3f(EUniformEnum::LIGHT_COLOR_VEC3, component->m_color.x, component->m_color.y, component->m_color.z);
+	
+	//this uniform have use for object lightning
+	//glUniform3f(EUniformEnum::LIGHT_POS_VEC3, component->m_color.x, component->m_color.y, component->m_color.z);
 
 	for (auto c : mesh->m_mesh)
 	{

@@ -190,13 +190,11 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="FS.frag" />
-    <Text Include="SimpleVS.frag" />
-    <Text Include="VS.frag" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LampShader.frag" />
-    <None Include="SimpleFS.frag" />
+    <None Include="shaders\FS.frag" />
+    <None Include="shaders\LampShader.frag" />
+    <None Include="shaders\SimpleFS.frag" />
+    <None Include="shaders\SimpleVS.frag" />
+    <None Include="shaders\VS.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

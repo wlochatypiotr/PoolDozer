@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Renderer.h"
 
+
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
@@ -20,24 +21,7 @@ int main()
 	Renderer renderer;
 	renderer.Initialize(Configuration::m_view, Configuration::m_projection, Configuration::m_shaders.Get(1));
 	
-	//create entity
-	CEntity dice("dice");
-	//set transform
-	Transform dick;
-	dick.m_position = Configuration::m_lightPosition; //{ 0.0f, 1.0f, -5.0f};
-	dick.m_rotation = { 0.0f, 0.0f, 0.0f };
-	dick.m_scale = { 0.5f, 0.5f, 0.5f };
-	dice.SetTransform(dick);
-
-	//create component and fill it's values
-	CECVisualMesh cubeMesh;
-	cubeMesh.SetColor(1.0f, 0.0f, 0.0f);
-	cubeMesh.SetProgram(Configuration::m_shaders.Get(0));
-
-	
-	//renderer.DrawMesh(&dice);
-	//Shaders and program
-
+	/////////////////////LOAD MESH//////////////////////////
 	TinyModel Lamp("models/Cube.obj"
 		, Configuration::m_shaders.Get(Configuration::Shaders::LAMP_SHADER)
 		, &Configuration::m_lampModel
@@ -46,12 +30,6 @@ int main()
 		, &Configuration::m_boardColor
 		, &Configuration::m_lightColor
 		, &Configuration::m_lightPosition);
-
-	//set components mesh
-	cubeMesh.SetMesh(Lamp.m_renderingData);
-	dice.SetEntityComponent(&cubeMesh);
-	//renderer.DrawMesh(&dice);
-
 
 	TinyModel Tab("models/PoolTable.obj"
 		, Configuration::m_shaders.Get(Configuration::Shaders::TABLE_SHADER)
@@ -62,7 +40,24 @@ int main()
 		, &Configuration::m_lightColor
 		, &Configuration::m_lightPosition);
 
-	
+
+	//create entity
+	CEntity * lamp = new CEntity("lamp");
+	//set transform
+	lamp->SetPosition(Configuration::m_lightPosition);
+	lamp->SetRotation(0.0f, 0.0f, 0.0f);
+	lamp->SetScale(0.5f);
+
+	//this could be a shared ptr or unique ptr
+	CECVisualMesh * cube = new CECVisualMesh;
+	cube->SetColor(0.0f, 0.5f, 0.5f);
+	cube->SetProgram(Configuration::m_shaders.Get(0));
+
+	//Tiny model will just load data
+	cube->SetMesh(Lamp.m_renderingData);
+
+	lamp->SetEntityComponent(cube);
+
 	m_World.AddEntity(&Tab);
 	m_World.AddEntity(&Lamp);
 
@@ -86,8 +81,9 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//now Entity has to have method update which will call Update on all entities
-		cubeMesh.Update();
-		renderer.Draw(&dice);
+		//dice.Update();
+		lamp->Update();
+		renderer.Draw(lamp);
 
 		//m_World.Draw();
 		//Tab.Draw();
@@ -96,6 +92,10 @@ int main()
 	}
 	glfwTerminate();
 	physXworld.ShutDown();
+
+	//free memory
+	lamp->ClearComponents();
+	delete lamp;
 	return 0;
 }
 

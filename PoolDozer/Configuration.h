@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "ShaderLoader.h"
 
+
 class Configuration
 {
 public:
