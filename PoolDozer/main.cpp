@@ -11,7 +11,6 @@ GLfloat lastFrame = 0.0f;
 
 int main()
 {
-	
 	Configuration::Initialize();
 	//init PhysX
 	PhysXWorld physXworld;

@@ -77,6 +77,7 @@ public:
 
 	//CECVisualMesh(const std::vector<RenderingData> &mesh);
 	void SetMesh(const std::vector<RenderingData> &mesh);
+	//void SetMesh(std::vector<RenderingData> mesh);
 
 //private:
 	std::vector<RenderingData> m_mesh;

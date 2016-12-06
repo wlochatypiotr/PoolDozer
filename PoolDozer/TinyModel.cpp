@@ -15,6 +15,13 @@ TinyModel::TinyModel(const char * filename, Shader& program, glm::mat4 * model, 
 	
 }
 
+TinyModel::TinyModel(const char *filename)
+{
+	if (tinyobj::LoadObj(&m_attrib, &m_shapes, &m_materials, &m_err, filename, NULL, true))
+		std::cout << "Loading of model: " << filename << " is complete!" << std::endl << m_err;
+	LoadMesh();
+}
+
 TinyModel::~TinyModel()
 {
 	for (auto c : m_renderingData)
@@ -167,3 +174,109 @@ void TinyModel::LoadMesh()
 	}
 }
 
+std::vector<RenderingData> Load(const char* objFilename)
+{
+	{
+		std::vector<RenderingData> mesh;
+		tinyobj::attrib_t attrib;
+		std::vector<tinyobj::shape_t> shapes;
+		std::vector<tinyobj::material_t> materials;
+		std::string err;
+		unsigned int m_numVertices = 0;
+		unsigned int m_numIndices = 0;
+
+		if (tinyobj::LoadObj(&attrib, &shapes, &materials, &err, objFilename, NULL, true))
+			std::cout << "Loading of model: " << objFilename << " is complete!" << std::endl << err;
+
+
+		//LoadMesh function here
+		//calculate vertex number for model
+		m_numVertices = attrib.vertices.size();
+
+		//calculate index number for model
+		for (size_t i = 0; i < shapes.size(); ++i)
+		{
+			m_numIndices += shapes[i].mesh.indices.size();
+		}
+
+		// all model vertices
+		float* vertices = &attrib.vertices[0];
+		// all model normals
+		float* normals = &attrib.normals[0];
+
+		//for each mesh in the model
+		for (size_t i = 0; i < shapes.size(); ++i)
+		{
+			RenderingData meshData;
+			meshData.numVertices = 0;
+			meshData.numIndices = shapes[i].mesh.indices.size();
+			// moze to mozna jakos usprawnic ?
+			for (size_t j = 0; j < shapes[i].mesh.indices.size(); ++j)
+			{
+				if (meshData.numVertices < shapes[i].mesh.indices[j].vertex_index)
+					meshData.numVertices = shapes[i].mesh.indices[j].vertex_index;
+
+			}
+			meshData.numVertices += 1;
+			std::cout << "number of verts is: " << meshData.numVertices << std::endl;
+			std::cout << "number of indices is: " << meshData.numIndices << std::endl;
+
+			vertexData * currMesh = new vertexData[meshData.numVertices];
+
+			unsigned int * indices = new unsigned int[meshData.numIndices];
+
+			//std::copy(m_shapes[i].mesh.indices)
+			for (size_t j = 0; j < meshData.numIndices; ++j)
+			{
+				indices[j] = shapes[i].mesh.indices[j].vertex_index;
+			}
+
+			//load mesh normals and mesh vertices
+			for (size_t j = 0, vindex = 0, nindex = 0; j < shapes[i].mesh.indices.size(); ++j)
+			{
+				vindex = shapes[i].mesh.indices[j].vertex_index;
+				nindex = shapes[i].mesh.indices[j].normal_index;
+
+				//vertices
+				currMesh[vindex].x = vertices[(vindex * 3)];
+				currMesh[vindex].y = vertices[(vindex * 3) + 1];
+				currMesh[vindex].z = vertices[(vindex * 3) + 2];
+
+				//normals
+				currMesh[vindex].nx = normals[(nindex * 3)];
+				currMesh[vindex].ny = normals[(nindex * 3) + 1];
+				currMesh[vindex].nz = normals[(nindex * 3) + 2];
+
+				//texcords...
+			}
+			//send data to openGL
+			GLuint VAO, VBO, EBO;
+			glGenVertexArrays(1, &VAO);
+			glBindVertexArray(VAO);
+			glGenBuffers(1, &VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(*currMesh) * meshData.numVertices, currMesh, GL_STATIC_DRAW);
+			//glBufferData(GL_ARRAY_BUFFER, sizeof(*vertices) * m_numVertices, vertices, GL_STATIC_DRAW);
+
+			glGenBuffers(1, &EBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshData.numIndices, indices, GL_STATIC_DRAW);
+
+			glVertexAttribPointer(Configuration::m_vertexAttributes::VERTEX_POSITION, 3, GL_FLOAT, GL_TRUE, 9 * sizeof(GLfloat), (GLvoid*)0);
+			glVertexAttribPointer(Configuration::m_vertexAttributes::VERTEX_NORMAL, 3, GL_FLOAT, GL_TRUE, 9 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+			//glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)3);	//texture cordinates
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+
+			glBindVertexArray(0);
+			meshData.VBO = std::move(VBO);
+			meshData.EBO = std::move(EBO);
+			meshData.VAO = std::move(VAO);
+			mesh.push_back(std::move(meshData));
+
+			delete[] currMesh;
+			delete[] indices;
+		}
+		return std::move(mesh);
+	}
+}

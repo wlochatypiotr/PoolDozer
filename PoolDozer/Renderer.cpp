@@ -48,7 +48,7 @@ void Renderer::DrawComponent(CECVisualMesh * mesh)
 	//this uniform have use for object lightning
 	//glUniform3f(EUniformEnum::LIGHT_POS_VEC3, component->m_color.x, component->m_color.y, component->m_color.z);
 
-	for (auto c : mesh->m_mesh)
+	for (RenderingData c : mesh->m_mesh)
 	{
 		glBindVertexArray(c.VAO);
 

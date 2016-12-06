@@ -15,10 +15,16 @@ struct RenderingData
 	unsigned int numVertices;
 };
 
+std::vector<RenderingData> Load(const char* objFilename);
+
+
+
+
 class TinyModel
 {
 public:
 	TinyModel(const char *filename, Shader& program, glm::mat4 * model, glm::mat4  * view, glm::mat4 * projection, glm::vec3 * color, glm::vec3 * lightColor, glm::vec3 * lightPosition);
+	TinyModel(const char *filename);
 	TinyModel(const TinyModel&) = delete;
 	TinyModel& operator= (const TinyModel&) = delete;
 	~TinyModel();

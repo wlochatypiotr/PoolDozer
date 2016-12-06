@@ -47,3 +47,8 @@ void CECVisualMesh::SetMesh(const std::vector<RenderingData>& mesh)
 {
 	m_mesh = mesh;
 }
+//
+//void CECVisualMesh::SetMesh(std::vector<RenderingData> mesh)
+//{
+//	m_mesh = mesh;
+//}

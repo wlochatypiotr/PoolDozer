@@ -56,6 +56,9 @@
     <ClCompile Include="EntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vertexData.h">
@@ -96,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="EntityComponent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
