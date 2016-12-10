@@ -28,27 +28,30 @@ void Renderer::SetProgram(const Shader & shader)
 
 
 
-void Renderer::DrawComponent(CECVisualMesh * mesh)
+void Renderer::DrawComponent(CECVisualMesh * meshComponent)
 {
-	if (mesh->m_program != nullptr)
-		glUseProgram(mesh->m_program->Program);
+	if (meshComponent->m_program != nullptr)
+		glUseProgram(meshComponent->m_program->Program);
 	else
 		glUseProgram(m_program.Program);
 
 	//hardcoede matrix uniform location
-	glUniformMatrix4fv(EUniformEnum::MODEL_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(mesh->m_model));
+	glUniformMatrix4fv(EUniformEnum::MODEL_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(meshComponent->m_model));
 	glUniformMatrix4fv(EUniformEnum::VIEW_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(m_view));
 	glUniformMatrix4fv(EUniformEnum::PROJECTION_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(m_projection));
 
-	glUniform3f(EUniformEnum::OBJECT_COLOR_VEC3, mesh->m_color.x, mesh->m_color.y, mesh->m_color.z);
+	glUniform3f(EUniformEnum::OBJECT_COLOR_VEC3, meshComponent->m_color.x, meshComponent->m_color.y, meshComponent->m_color.z);
 
 	//this uniform have use for light source
-	//glUniform3f(EUniformEnum::LIGHT_COLOR_VEC3, component->m_color.x, component->m_color.y, component->m_color.z);
+	//hardcoded light value
+	glUniform3f(EUniformEnum::LIGHT_COLOR_VEC3, 1.0f, 1.0f, 1.0f);
 	
 	//this uniform have use for object lightning
-	//glUniform3f(EUniformEnum::LIGHT_POS_VEC3, component->m_color.x, component->m_color.y, component->m_color.z);
+	//hardcoded light position
+	glUniform3f(EUniformEnum::LIGHT_POS_VEC3, 0.0f,1.0f, -5.0f);
 
-	for (RenderingData c : mesh->m_mesh)
+
+	for (MeshStruct c : meshComponent->GetMesh()->GetMeshData())
 	{
 		glBindVertexArray(c.VAO);
 
@@ -85,4 +88,10 @@ void Renderer::Draw(CEntity * entity)
 	else
 		std::cout << "This entity has no visual component!";
 
+}
+
+void Renderer::ClearBuffer()
+{
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

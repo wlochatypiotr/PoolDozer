@@ -7,6 +7,7 @@ layout (location = 1) in vec3 normal;
 layout (location = 3) uniform mat4 model;
 layout (location = 4) uniform mat4 view;
 layout (location = 5) uniform mat4 projection;
+//layout (location = 6) uniform vec3 incolor;
 
 out vec3 Normal;
 out vec4 fragPos;

@@ -1,14 +1,12 @@
 #pragma once
-#include <GL/glew.h>
-#include "GLFW/glfw3.h"
+#include "ShaderLoader.h" // add GL/glew
+#include "InputManager.h"	//add GLFW order here matters
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include <iostream>
 #include <thread>
 #include "ShaderManager.h"
 #include "InputManager.h"
-#include "ShaderLoader.h"
 
 
 class Configuration

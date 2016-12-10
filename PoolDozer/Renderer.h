@@ -1,8 +1,5 @@
 #pragma once
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "ShaderLoader.h"
 #include "Entity.h"
 
 using namespace glm;
@@ -33,8 +30,8 @@ public:
 	void SetProgram(const Shader& shader);
 
 
-	//void DrawMesh(CECVisualMesh* mesh);
 	void Draw(CEntity * entity);
+	void ClearBuffer();
 private:
 	//overloads on DrawComponent
 	void DrawComponent(CECVisualMesh* mesh);

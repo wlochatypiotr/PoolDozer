@@ -95,6 +95,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,7 +175,6 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="TinyModel.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h" />
@@ -183,6 +183,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="PhysXWorld.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ShaderManager.h" />

@@ -1,8 +1,7 @@
 #pragma once
-#include <string>
-#include <vector>
-#include "TinyModel.h"
-
+#include "Mesh.h"
+#include "ShaderLoader.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 using entity_component_id_t = std::string;
 class CEntity;
@@ -11,7 +10,7 @@ class CEntityComponent
 {
 public:
 	CEntityComponent() : m_owner(nullptr) {}
-	virtual ~CEntityComponent() = 0 {}
+	virtual ~CEntityComponent() =0  {}
 
 	virtual const entity_component_id_t ComponentID() const = 0;
 	virtual const entity_component_id_t FamilyID() const = 0;
@@ -31,6 +30,7 @@ class CECVisual : public CEntityComponent
 {
 	//common interface
 public:
+	//virtual ~CECVisual() {}
 	virtual const entity_component_id_t FamilyID() const
 	{
 		return entity_component_id_t("ECVisual");
@@ -55,9 +55,7 @@ public:
 		return entity_component_id_t("ECVisualSphere");
 	}
 
-	//virtual void Render() const;
-
-	CECVisualSphere(float radius);
+	CECVisualSphere(/*float radius*/);
 
 	const float GetRadius() const { return m_radius; }
 	void SetRadius(const float r) { m_radius = r; }
@@ -73,12 +71,9 @@ public:
 	{
 		return entity_component_id_t("ECVisualMesh");
 	}
-	//virtual void Render() const;
 
-	//CECVisualMesh(const std::vector<RenderingData> &mesh);
-	void SetMesh(const std::vector<RenderingData> &mesh);
-	//void SetMesh(std::vector<RenderingData> mesh);
-
-//private:
-	std::vector<RenderingData> m_mesh;
+	void SetMesh(CMesh* meshptr);
+	CMesh* GetMesh();
+private:
+	CMesh * mp_mesh;
 };

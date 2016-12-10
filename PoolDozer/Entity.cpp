@@ -99,11 +99,11 @@ CEntityComponent * CEntity::SetEntityComponent(CEntityComponent * newEntityCompo
 void CEntity::ClearComponents()
 {
 	//this implementation works for plain pointers
-	using iterator_t = std::map<const entity_component_id_t, CEntityComponent* >::iterator;
-	for (iterator_t it = m_components.begin(); it != m_components.end(); ++it)
-	{
-		//free dynamic allocated memory
-		delete it->second;
-	}
+	//using iterator_t = std::map<const entity_component_id_t, CEntityComponent* >::iterator;
+	//for (iterator_t it = m_components.begin(); it != m_components.end(); ++it)
+	//{
+	//	//free dynamic allocated memory
+	//	delete it->second;
+	//}
 	m_components.clear();
 }

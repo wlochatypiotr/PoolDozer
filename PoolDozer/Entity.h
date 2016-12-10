@@ -1,8 +1,7 @@
 #pragma once
-#include <string>
-#include <map>
-#include <memory>
 #include "EntityComponent.h"
+#include <map>
+
 
 using namespace glm;
 class Renderer;
@@ -45,6 +44,5 @@ private:
 	entity_id_t m_entityID;
 
 	using componentTableType = std::map<const entity_component_id_t, CEntityComponent* >;
-
 	componentTableType m_components; //map of all the components;
 };

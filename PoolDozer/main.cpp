@@ -1,9 +1,8 @@
 #include "Configuration.h"
-#include "TinyModel.h"
 #include "World.h"
 #include "PhysXWorld.h"
-#include "Entity.h"
 #include "Renderer.h"
+#include "MeshManager.h"
 
 
 GLfloat deltaTime = 0.0f;
@@ -16,49 +15,54 @@ int main()
 	PhysXWorld physXworld;
 	physXworld.StartUp();
 
-	World m_World;
+	//World m_World;
 	Renderer renderer;
 	renderer.Initialize(Configuration::m_view, Configuration::m_projection, Configuration::m_shaders.Get(1));
 	
-	/////////////////////LOAD MESH//////////////////////////
-	TinyModel Lamp("models/Cube.obj"
-		, Configuration::m_shaders.Get(Configuration::Shaders::LAMP_SHADER)
-		, &Configuration::m_lampModel
-		, &Configuration::m_view
-		, &Configuration::m_projection
-		, &Configuration::m_boardColor
-		, &Configuration::m_lightColor
-		, &Configuration::m_lightPosition);
+	//1. Load models using MeshManager
+	//2. Create Entity (or use manager(world) in future)
+	//3. Create EntityComponent
+	//4. Set EntityComponent proporties
+	//5. Set Enitity proporties and components
 
-	TinyModel Tab("models/PoolTable.obj"
-		, Configuration::m_shaders.Get(Configuration::Shaders::TABLE_SHADER)
-		, &Configuration::m_boardModel
-		, &Configuration::m_view
-		, &Configuration::m_projection
-		, &Configuration::m_lightColor
-		, &Configuration::m_lightColor
-		, &Configuration::m_lightPosition);
+	////////////////////////1///////////////////////////////
+	MeshManager meshManager;
+	meshManager.Load("MCube", "models/Cube.obj");
+	meshManager.Load("MTable", "models/PoolTable.obj");
 
+	////////////////////////2///////////////////////////////
+	CWorld world(&renderer);
+	world.AddNewEntity("Elamp");
+	world.AddNewEntity("Etable");
 
-	//create entity
-	CEntity * lamp = new CEntity("lamp");
-	//set transform
+	/////////////////////////3//////////////////////////////
+	world.AddComponent("CcubeMesh", CWorld::MESH_COMPONENT);
+	world.AddComponent("CtableMesh", CWorld::MESH_COMPONENT);
+
+	//////////////////////////4/////////////////////////////
+	auto lampcomp = static_cast<CECVisualMesh*>(world.GetComponent("CcubeMesh"));
+	auto tablecomp = static_cast<CECVisualMesh*>(world.GetComponent("CtableMesh"));
+
+	lampcomp->SetColor(1.0f, 0.5f, 0.5f);
+	lampcomp->SetProgram(Configuration::m_shaders.Get(0));
+	lampcomp->SetMesh(meshManager.Get("MCube"));
+
+	tablecomp->SetColor(0.5f, 0.5f, 0.5f);
+	tablecomp->SetProgram(Configuration::m_shaders.Get(1));
+	tablecomp->SetMesh(meshManager.Get("MTable"));
+
+	////////////////////////////5//////////////////////////
+	CEntity* lamp = world.GetEntity("Elamp");
 	lamp->SetPosition(Configuration::m_lightPosition);
 	lamp->SetRotation(0.0f, 0.0f, 0.0f);
 	lamp->SetScale(0.5f);
+	lamp->SetEntityComponent(lampcomp);
 
-	//this could be a shared ptr or unique ptr
-	CECVisualMesh * cube = new CECVisualMesh;
-	cube->SetColor(0.0f, 0.5f, 0.5f);
-	cube->SetProgram(Configuration::m_shaders.Get(0));
-
-	//Tiny model will just load data
-	cube->SetMesh(Lamp.m_renderingData);
-
-	lamp->SetEntityComponent(cube);
-
-	m_World.AddEntity(&Tab);
-	m_World.AddEntity(&Lamp);
+	CEntity* table = world.GetEntity("Etable");
+	table->SetPosition(glm::vec3(0.0f, -1.0f, -1.40f));
+	table->SetRotation(0.0f, 0.0f, 0.0f);
+	table->SetScale(1.0f);
+	table->SetEntityComponent(tablecomp);
 
 	//main loop
 	while (!glfwWindowShouldClose(Configuration::m_window))
@@ -70,31 +74,16 @@ int main()
 
 		// process events
 		Configuration::m_inputManager.ProcessInput();
-		//glfwPollEvents();
-		//wordl.ProcessInput
-		//world.Update()
-		
+		//glfwPollEvents();		
 
-		//drawing functions
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		world.Update();
+		world.Draw();
 
-		//now Entity has to have method update which will call Update on all entities
-		//dice.Update();
-		lamp->Update();
-		renderer.Draw(lamp);
-
-		//m_World.Draw();
-		//Tab.Draw();
-		//Lamp.Draw();
 		glfwSwapBuffers(Configuration::m_window);
 	}
 	glfwTerminate();
 	physXworld.ShutDown();
 
-	//free memory
-	lamp->ClearComponents();
-	delete lamp;
 	return 0;
 }
 

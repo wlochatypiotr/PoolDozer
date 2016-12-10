@@ -1,5 +1,6 @@
 #include "EntityComponent.h"
 #include "Entity.h"
+
 void CECVisual::Update()
 {
 	CEntity * owner = GetOwner();
@@ -43,12 +44,14 @@ void CECVisual::SetProgram(Shader &program)
 }
 
 
-void CECVisualMesh::SetMesh(const std::vector<RenderingData>& mesh)
+void CECVisualMesh::SetMesh(CMesh* meshptr)
 {
-	m_mesh = mesh;
+
+	mp_mesh = meshptr;
+	
 }
-//
-//void CECVisualMesh::SetMesh(std::vector<RenderingData> mesh)
-//{
-//	m_mesh = mesh;
-//}
+CMesh * CECVisualMesh::GetMesh()
+{
+	return mp_mesh;
+}
+
