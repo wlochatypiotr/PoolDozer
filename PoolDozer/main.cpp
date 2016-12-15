@@ -3,6 +3,7 @@
 #include "PhysXWorld.h"
 #include "Renderer.h"
 #include "MeshManager.h"
+#include "Engine.h"
 
 
 GLfloat deltaTime = 0.0f;
@@ -10,14 +11,16 @@ GLfloat lastFrame = 0.0f;
 
 int main()
 {
+	CEngine engine;
+	engine.StartUp();
+
 	Configuration::Initialize();
 	//init PhysX
 	PhysXWorld physXworld;
 	physXworld.StartUp();
 
-	//World m_World;
 	Renderer renderer;
-	renderer.Initialize(Configuration::m_view, Configuration::m_projection, Configuration::m_shaders.Get(1));
+	renderer.Initialize(engine.GetShaderManager()->Get(1), engine.GetWindowManager());
 	
 	//1. Load models using MeshManager
 	//2. Create Entity (or use manager(world) in future)
@@ -44,11 +47,11 @@ int main()
 	auto tablecomp = static_cast<CECVisualMesh*>(world.GetComponent("CtableMesh"));
 
 	lampcomp->SetColor(1.0f, 0.5f, 0.5f);
-	lampcomp->SetProgram(Configuration::m_shaders.Get(0));
+	lampcomp->SetProgram(engine.GetShaderManager()->Get(0));
 	lampcomp->SetMesh(meshManager.Get("MCube"));
 
 	tablecomp->SetColor(0.5f, 0.5f, 0.5f);
-	tablecomp->SetProgram(Configuration::m_shaders.Get(1));
+	tablecomp->SetProgram(engine.GetShaderManager()->Get(1));
 	tablecomp->SetMesh(meshManager.Get("MTable"));
 
 	////////////////////////////5//////////////////////////
@@ -65,7 +68,7 @@ int main()
 	table->SetEntityComponent(tablecomp);
 
 	//main loop
-	while (!glfwWindowShouldClose(Configuration::m_window))
+	while (!glfwWindowShouldClose(engine.GetWindowManager()->GetWindow()))
 	{
 		// Get frame time
 		GLfloat currentFrame = glfwGetTime();
@@ -73,13 +76,11 @@ int main()
 		lastFrame = currentFrame;
 
 		// process events
-		Configuration::m_inputManager.ProcessInput();
-		//glfwPollEvents();		
-
+		engine.GetInputManager()->ProcessInput();
 		world.Update();
 		world.Draw();
 
-		glfwSwapBuffers(Configuration::m_window);
+		glfwSwapBuffers(engine.GetWindowManager()->GetWindow());
 	}
 	glfwTerminate();
 	physXworld.ShutDown();

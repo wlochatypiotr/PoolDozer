@@ -1,7 +1,7 @@
 #pragma once
 #include "glm/gtc/type_ptr.hpp"
 #include "Entity.h"
-
+#include "WindowManager.h"
 using namespace glm;
 
 class Renderer
@@ -24,7 +24,7 @@ public:
 		LIGHT_POS_VEC3 = 8
 	};
 
-	void Initialize(const mat4& view, const mat4& proj, const Shader& shader);
+	void Initialize(const Shader& shader, CWindowManager * mgr);
 	void SetViewMatrix(const mat4& view);
 	void SetProjectionMatrix(const mat4& proj);
 	void SetProgram(const Shader& shader);
@@ -38,4 +38,5 @@ private:
 	mat4 m_view;// = nullptr;
 	mat4 m_projection;// = nullptr;
 	Shader m_program;
+	CWindowManager * m_windowManager;
 };

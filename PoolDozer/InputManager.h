@@ -2,13 +2,13 @@
 #include "GLFW/glfw3.h"
 
 
-class InputManager
+class CInputManager
 {
 public:
-	InputManager();
-	InputManager(GLFWwindow* window);
-	InputManager(const InputManager &) = delete;
-	InputManager& operator=(const InputManager &) = delete;
+	CInputManager();
+	CInputManager(GLFWwindow* window);
+	CInputManager(const CInputManager &) = delete;
+	CInputManager& operator=(const CInputManager &) = delete;
 	static void KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode);
 	void SetupKeyCallback();
 	static void ProcessInput();

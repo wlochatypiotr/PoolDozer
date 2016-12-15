@@ -1,22 +1,22 @@
 #include "InputManager.h"
 
 
-bool InputManager::m_keys[1024];
-GLFWwindow * InputManager::m_window = nullptr;
+bool CInputManager::m_keys[1024];
+GLFWwindow * CInputManager::m_window = nullptr;
 
-InputManager::InputManager()
+CInputManager::CInputManager()
 {
 }
 
-InputManager::InputManager(GLFWwindow * window)
+CInputManager::CInputManager(GLFWwindow * window)
 {
 	m_window = window;
-	glfwSetKeyCallback(m_window, InputManager::KeyCallback);
+	glfwSetKeyCallback(m_window, CInputManager::KeyCallback);
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 
-void InputManager::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
+void CInputManager::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(m_window, GL_TRUE);
@@ -29,7 +29,7 @@ void InputManager::KeyCallback(GLFWwindow * window, int key, int scancode, int a
 	}
 }
 
-void InputManager::ProcessInput()
+void CInputManager::ProcessInput()
 {
 	glfwPollEvents();
 }

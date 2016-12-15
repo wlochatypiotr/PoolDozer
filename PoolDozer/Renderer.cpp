@@ -4,10 +4,23 @@ Renderer::Renderer()
 {
 }
 
-void Renderer::Initialize(const mat4& view, const mat4& proj, const Shader& shader)
+void Renderer::Initialize(const Shader& shader, CWindowManager * mgr)
 {
-	SetViewMatrix(view);
-	SetProjectionMatrix(proj);
+	//compute view matrix
+	m_windowManager = mgr;
+
+	m_view = glm::mat4();
+	m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -2.6f));
+	m_view = glm::rotate(m_view, glm::radians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	
+	//compute projection matrix
+	m_projection = glm::mat4();
+	m_projection = glm::perspective(glm::radians(45.0f), (GLfloat)m_windowManager->GetWindowWidth() / (GLfloat)m_windowManager->GetWindowHeight(), 0.1f, 100.0f);
+
+	//SetViewMatrix(view);
+	//SetProjectionMatrix(proj);
+
 	SetProgram(shader);
 }
 
@@ -94,4 +107,9 @@ void Renderer::ClearBuffer()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, m_windowManager->GetWindowWidth(), m_windowManager->GetWindowHeight());
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glDisable(GL_TEXTURE_2D);
 }

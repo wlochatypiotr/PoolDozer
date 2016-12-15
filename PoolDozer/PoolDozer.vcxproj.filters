@@ -56,6 +56,12 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vertexData.h">
@@ -102,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

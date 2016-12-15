@@ -165,6 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="TinyModel.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
+    <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="TinyModel.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="vertexData.h" />
+    <ClInclude Include="WindowManager.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

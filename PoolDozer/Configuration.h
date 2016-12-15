@@ -20,8 +20,8 @@ public:
 	static unsigned int m_threadsNumber;
 
 	//managers
-	static ShaderManager m_shaders;
-	static InputManager m_inputManager;
+	static CShaderManager m_shaders;
+	static CInputManager m_inputManager;
 
 	enum Shaders
 	{
