@@ -8,14 +8,6 @@ CInputManager::CInputManager()
 {
 }
 
-CInputManager::CInputManager(GLFWwindow * window)
-{
-	m_window = window;
-	glfwSetKeyCallback(m_window, CInputManager::KeyCallback);
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-}
-
-
 void CInputManager::KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -27,6 +19,13 @@ void CInputManager::KeyCallback(GLFWwindow * window, int key, int scancode, int 
 		else if (action == GLFW_RELEASE)
 			m_keys[key] = false;
 	}
+}
+
+void CInputManager::Initialize(GLFWwindow* window)
+{
+	m_window = window;
+	glfwSetKeyCallback(m_window, CInputManager::KeyCallback);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void CInputManager::ProcessInput()

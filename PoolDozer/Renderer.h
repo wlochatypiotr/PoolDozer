@@ -4,10 +4,11 @@
 #include "WindowManager.h"
 using namespace glm;
 
-class Renderer
+
+class CRenderer
 {
 public:
-	Renderer();
+	CRenderer();
 	enum EAttributeEnum
 	{
 		VERTEX_POS = 0,

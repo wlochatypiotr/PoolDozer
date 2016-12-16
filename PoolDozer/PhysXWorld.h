@@ -4,12 +4,12 @@
 
 using namespace physx;
 
-class PhysXWorld
+class CPhysXWorld
 {
 public:
 
-	PhysXWorld();
-	~PhysXWorld();
+	CPhysXWorld();
+	~CPhysXWorld();
 
 	void StartUp();
 	void ShutDown();

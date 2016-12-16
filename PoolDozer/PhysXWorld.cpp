@@ -3,16 +3,16 @@
 
 
 
-PhysXWorld::PhysXWorld()
+CPhysXWorld::CPhysXWorld()
 {
 	//do nothing
 }
 
-PhysXWorld::~PhysXWorld()
+CPhysXWorld::~CPhysXWorld()
 {	//do nothing
 }
 
-void PhysXWorld::StartUp()
+void CPhysXWorld::StartUp()
 {
 	m_foundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_allocatorCallback, m_errorCallback);
 	ASSERT(m_foundation);
@@ -34,7 +34,7 @@ void PhysXWorld::StartUp()
 		std::cout << "PhysX Scene successfully created." << std::endl;
 }
 
-void PhysXWorld::ShutDown()
+void CPhysXWorld::ShutDown()
 {
 	m_scene->release();
 	m_physics->release();

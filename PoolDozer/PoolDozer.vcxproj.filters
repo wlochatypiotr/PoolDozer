@@ -15,9 +15,6 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{7fc36935-5de5-4cf9-8528-27be5162cebd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable">
-      <UniqueIdentifier>{50feb62b-6348-4df5-8cca-1eaa52781c30}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Loaders">
       <UniqueIdentifier>{649b28e8-5a27-4176-80d7-99ac51b4fa4c}</UniqueIdentifier>
     </Filter>
@@ -34,12 +31,6 @@
     </ClCompile>
     <ClCompile Include="Configuration.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="tiny_obj_loader.cc">
-      <Filter>Loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="TinyModel.cpp">
-      <Filter>Drawable</Filter>
     </ClCompile>
     <ClCompile Include="PhysXWorld.cpp">
       <Filter>Source Files</Filter>
@@ -62,12 +53,12 @@
     <ClCompile Include="WindowManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vertexData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysXWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
@@ -79,26 +70,14 @@
     <ClInclude Include="Configuration.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
-      <Filter>Loaders</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderLoader.h">
       <Filter>Loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="TinyModel.h">
-      <Filter>Drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityComponent.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Loaders</Filter>
@@ -110,7 +89,16 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXWorld.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

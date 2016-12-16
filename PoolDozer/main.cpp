@@ -1,8 +1,5 @@
-#include "Configuration.h"
+//#include "Configuration.h"
 #include "World.h"
-#include "PhysXWorld.h"
-#include "Renderer.h"
-#include "MeshManager.h"
 #include "Engine.h"
 
 
@@ -13,14 +10,6 @@ int main()
 {
 	CEngine engine;
 	engine.StartUp();
-
-	Configuration::Initialize();
-	//init PhysX
-	PhysXWorld physXworld;
-	physXworld.StartUp();
-
-	Renderer renderer;
-	renderer.Initialize(engine.GetShaderManager()->Get(1), engine.GetWindowManager());
 	
 	//1. Load models using MeshManager
 	//2. Create Entity (or use manager(world) in future)
@@ -29,18 +18,17 @@ int main()
 	//5. Set Enitity proporties and components
 
 	////////////////////////1///////////////////////////////
-	MeshManager meshManager;
-	meshManager.Load("MCube", "models/Cube.obj");
-	meshManager.Load("MTable", "models/PoolTable.obj");
+	//Takes place in engines MeshManager::Initialze()
 
 	////////////////////////2///////////////////////////////
-	CWorld world(&renderer);
+	//world in such shape should be called a scene, engine should have SceneManager with scenes(worlds)
+	CScene world(engine.GetRenderer());
 	world.AddNewEntity("Elamp");
 	world.AddNewEntity("Etable");
 
 	/////////////////////////3//////////////////////////////
-	world.AddComponent("CcubeMesh", CWorld::MESH_COMPONENT);
-	world.AddComponent("CtableMesh", CWorld::MESH_COMPONENT);
+	world.AddComponent("CcubeMesh", CScene::MESH_COMPONENT);
+	world.AddComponent("CtableMesh", CScene::MESH_COMPONENT);
 
 	//////////////////////////4/////////////////////////////
 	auto lampcomp = static_cast<CECVisualMesh*>(world.GetComponent("CcubeMesh"));
@@ -48,15 +36,15 @@ int main()
 
 	lampcomp->SetColor(1.0f, 0.5f, 0.5f);
 	lampcomp->SetProgram(engine.GetShaderManager()->Get(0));
-	lampcomp->SetMesh(meshManager.Get("MCube"));
+	lampcomp->SetMesh(engine.GetMeshManager()->Get("MCube"));
 
 	tablecomp->SetColor(0.5f, 0.5f, 0.5f);
 	tablecomp->SetProgram(engine.GetShaderManager()->Get(1));
-	tablecomp->SetMesh(meshManager.Get("MTable"));
+	tablecomp->SetMesh(engine.GetMeshManager()->Get("MTable"));
 
 	////////////////////////////5//////////////////////////
 	CEntity* lamp = world.GetEntity("Elamp");
-	lamp->SetPosition(Configuration::m_lightPosition);
+	lamp->SetPosition(glm::vec3(0.0f, 1.0f, -5.0f));
 	lamp->SetRotation(0.0f, 0.0f, 0.0f);
 	lamp->SetScale(0.5f);
 	lamp->SetEntityComponent(lampcomp);
@@ -71,7 +59,7 @@ int main()
 	while (!glfwWindowShouldClose(engine.GetWindowManager()->GetWindow()))
 	{
 		// Get frame time
-		GLfloat currentFrame = glfwGetTime();
+		GLfloat currentFrame = engine.GetCurrentTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -80,10 +68,10 @@ int main()
 		world.Update();
 		world.Draw();
 
+		//this should get called by renderer after scene render call
 		glfwSwapBuffers(engine.GetWindowManager()->GetWindow());
 	}
-	glfwTerminate();
-	physXworld.ShutDown();
+	engine.ShutDown();
 
 	return 0;
 }

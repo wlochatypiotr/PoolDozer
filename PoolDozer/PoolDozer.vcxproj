@@ -171,11 +171,10 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="PhysXWorld.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
-    <ClCompile Include="TinyModel.cpp" />
-    <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,8 +189,6 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderLoader.h" />
-    <ClInclude Include="TinyModel.h" />
-    <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="vertexData.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="World.h" />

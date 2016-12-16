@@ -4,7 +4,7 @@
 
 
 using namespace glm;
-class Renderer;
+class CRenderer;
 using entity_id_t = std::string;
 
 

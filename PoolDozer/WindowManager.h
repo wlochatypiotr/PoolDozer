@@ -11,6 +11,7 @@ public:
 	CWindowManager& operator=(const CWindowManager&) = delete;
 	~CWindowManager();
 	void Initialize(int majorVersion, int minorVersion, int screenWidth, int screenHeight);
+	void ShutDown();
 	GLFWwindow * GetWindow() { return m_window; }
 	int GetWindowWidth() { return m_screenWidth; }
 	int GetWindowHeight() { return m_screenHeight; }

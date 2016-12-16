@@ -41,3 +41,8 @@ void CWindowManager::Initialize(int majorVersion, int minorVersion, int screenWi
 	//glDisable(GL_TEXTURE_2D);
 }
 
+void CWindowManager::ShutDown()
+{
+	glfwTerminate();
+}
+

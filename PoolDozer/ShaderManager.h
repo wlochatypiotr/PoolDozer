@@ -16,6 +16,7 @@ public:
 	CShaderManager();
 
 	Shader& Get(const int& id);
+	void Initialize();
 	void Load(const int& id, Shader shader);
 private:
 	std::unordered_map <int, Shader > m_map;

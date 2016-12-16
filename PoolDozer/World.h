@@ -1,6 +1,8 @@
 #pragma once
 #include "Renderer.h"
-class CWorld
+#include <unordered_map>
+#include <memory>
+class CScene
 {
 public:
 	enum EComponentTypeEnum {
@@ -9,9 +11,9 @@ public:
 		PHYSIC_COMPONET = 2
 	};
 
-	CWorld(const CWorld&) = delete;
-	CWorld& operator=(const CWorld&) = delete;
-	CWorld(Renderer* rend = nullptr) : m_renderer(rend) {};
+	CScene(const CScene&) = delete;
+	CScene& operator=(const CScene&) = delete;
+	CScene(CRenderer* rend = nullptr) : m_renderer(rend) {};
 
 	CEntity* GetEntity(const entity_id_t& id);
 	CEntityComponent* GetComponent(const entity_component_id_t& id);
@@ -19,26 +21,26 @@ public:
 	void AddComponent(const entity_component_id_t& id, EComponentTypeEnum type);
 	void Update();
 	void Draw();
-	void SetRenderer(Renderer* render);
+	void SetRenderer(CRenderer* render);
 private:
 	std::unordered_map <entity_id_t, std::unique_ptr<CEntity> > m_entities;
 	std::unordered_map <entity_component_id_t, std::unique_ptr<CEntityComponent> > m_components;
 
-	Renderer* m_renderer;
+	CRenderer* m_renderer;
 };
 
-CEntity * CWorld::GetEntity(const entity_id_t & id)
+CEntity * CScene::GetEntity(const entity_id_t & id)
 {
 	return m_entities.at(id).get();
 }
 
-inline CEntityComponent * CWorld::GetComponent(const entity_component_id_t & id)
+inline CEntityComponent * CScene::GetComponent(const entity_component_id_t & id)
 {
 	return m_components.at(id).get();
 }
 
 //constructs CEntity object with id set to id
-inline void CWorld::AddNewEntity(const entity_id_t & id)
+inline void CScene::AddNewEntity(const entity_id_t & id)
 {
 	std::unique_ptr<CEntity> entity = std::make_unique<CEntity>(id);
 
@@ -47,7 +49,7 @@ inline void CWorld::AddNewEntity(const entity_id_t & id)
 //type 0 = MESH
 //type 1 = SPHERE
 //type 2 = PHYSX_COMPONENT
-inline void CWorld::AddComponent(const entity_component_id_t & id, EComponentTypeEnum type)
+inline void CScene::AddComponent(const entity_component_id_t & id, EComponentTypeEnum type)
 {
 	std::unique_ptr<CEntityComponent> component;// = std::make_unique<CECVisualMesh>();
 	//m_components.emplace(id, std::move(component));
@@ -67,7 +69,7 @@ inline void CWorld::AddComponent(const entity_component_id_t & id, EComponentTyp
 	}
 }
 
-inline void CWorld::Update()
+inline void CScene::Update()
 {
 	using iterator_t = std::unordered_map <entity_id_t, std::unique_ptr<CEntity> >::iterator;
 	for (iterator_t iter = m_entities.begin(); iter != m_entities.end(); ++iter)
@@ -76,7 +78,7 @@ inline void CWorld::Update()
 	}
 }
 
-inline void CWorld::Draw()
+inline void CScene::Draw()
 {
 	if (m_renderer != nullptr) {
 
@@ -92,7 +94,7 @@ inline void CWorld::Draw()
 		std::cout << "No renderer attached to CWorld instance!" << std::endl;
 }
 
-inline void CWorld::SetRenderer(Renderer* render)
+inline void CScene::SetRenderer(CRenderer* render)
 {
 	m_renderer = render;
 }

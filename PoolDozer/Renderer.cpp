@@ -1,14 +1,15 @@
 #include "Renderer.h"
 
-Renderer::Renderer()
+CRenderer::CRenderer()
 {
 }
 
-void Renderer::Initialize(const Shader& shader, CWindowManager * mgr)
+void CRenderer::Initialize(const Shader& shader, CWindowManager * mgr)
 {
-	//compute view matrix
+	//set pointer for windowManager
 	m_windowManager = mgr;
 
+	//compute view matrix
 	m_view = glm::mat4();
 	m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -2.6f));
 	m_view = glm::rotate(m_view, glm::radians(35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -18,30 +19,28 @@ void Renderer::Initialize(const Shader& shader, CWindowManager * mgr)
 	m_projection = glm::mat4();
 	m_projection = glm::perspective(glm::radians(45.0f), (GLfloat)m_windowManager->GetWindowWidth() / (GLfloat)m_windowManager->GetWindowHeight(), 0.1f, 100.0f);
 
-	//SetViewMatrix(view);
-	//SetProjectionMatrix(proj);
-
+	//set default shader
 	SetProgram(shader);
 }
 
-void Renderer::SetViewMatrix(const mat4& view)
+void CRenderer::SetViewMatrix(const mat4& view)
 {
 	m_view = view;
 }
 
-void Renderer::SetProjectionMatrix(const mat4 & proj)
+void CRenderer::SetProjectionMatrix(const mat4 & proj)
 {
 	m_projection = proj;
 }
 
-void Renderer::SetProgram(const Shader & shader)
+void CRenderer::SetProgram(const Shader & shader)
 {
 	m_program = shader;
 }
 
 
 
-void Renderer::DrawComponent(CECVisualMesh * meshComponent)
+void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 {
 	if (meshComponent->m_program != nullptr)
 		glUseProgram(meshComponent->m_program->Program);
@@ -75,7 +74,7 @@ void Renderer::DrawComponent(CECVisualMesh * meshComponent)
 }
 
 
-void Renderer::Draw(CEntity * entity)
+void CRenderer::Draw(CEntity * entity)
 {
 	CEntityComponent * entityComponent = entity->GetEntityComponent(entity_component_id_t("ECVisual"));
 	if (entityComponent != nullptr)
@@ -103,7 +102,7 @@ void Renderer::Draw(CEntity * entity)
 
 }
 
-void Renderer::ClearBuffer()
+void CRenderer::ClearBuffer()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
