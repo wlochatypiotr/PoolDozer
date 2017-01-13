@@ -6,7 +6,6 @@ class CInputManager
 {
 public:
 	CInputManager();
-	//CInputManager(GLFWwindow* window);
 	CInputManager(const CInputManager &) = delete;
 	CInputManager& operator=(const CInputManager &) = delete;
 	static void KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode);

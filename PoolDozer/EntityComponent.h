@@ -6,6 +6,12 @@
 using entity_component_id_t = std::string;
 class CEntity;
 
+enum EComponentTypeEnum {
+	MESH_COMPONENT = 0,
+	SPHERE_COMPONENT = 1,
+	PHYSIC_COMPONET = 2
+};
+
 class CEntityComponent
 {
 public:

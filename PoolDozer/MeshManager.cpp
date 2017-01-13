@@ -1,6 +1,14 @@
 #include "MeshManager.h"
 
-CMeshManager::CMeshManager() {};
+CMeshManager::CMeshManager() 
+{
+
+}
+
+CMeshManager::~CMeshManager()
+{
+
+}
 
 //will throw exception if no such element exists
 CMesh * CMeshManager::Get(mesh_id_t id)

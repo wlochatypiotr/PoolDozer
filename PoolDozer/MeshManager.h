@@ -11,6 +11,7 @@ public:
 	CMeshManager(const CMeshManager&) = delete;
 	CMeshManager& operator=(const CMeshManager&) = delete;
 	CMeshManager();
+	~CMeshManager();
 
 	CMesh* Get(mesh_id_t id);
 	bool Load(mesh_id_t id, mesh_id_t filename);

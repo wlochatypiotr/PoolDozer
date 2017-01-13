@@ -4,6 +4,11 @@ CEngine::CEngine()
 {
 }
 
+CEngine::~CEngine()
+{
+
+}
+
 bool CEngine::StartUp()
 {
 	//1
@@ -22,26 +27,42 @@ bool CEngine::StartUp()
 	//init MeshManager and load some meshes
 	m_meshManager = std::make_unique<CMeshManager>();
 	m_meshManager->Initialize();
+
 	//5
+	m_componentManager = std::make_unique<CComponentManager>();
+	//loadcomponents
+	//m_componentManager->Initialize();
+
+	//6
 	//init Renderer with s default shader
 	m_renderer = std::make_unique<CRenderer>();
 	m_renderer->Initialize(m_shaderManager->Get(m_shaderManager->TABLE_SHADER), this->GetWindowManager());
-	//6
+	//7
+
 	//Initialzie PhysX engine
 	m_physXWorld = std::make_unique<CPhysXWorld>();
-	m_physXWorld->StartUp();
-	
+	m_physXWorld->StartUp();	
+	//8 
+	//Init world
+	m_world = std::make_unique<CWorld>();
+	m_world->Initialize(GetComponentManager(), GetRenderer());
 
 	return false;
 }
 
 void CEngine::ShutDown()
 {
-	//6
+	//8
+	//shutdown world
+
+	//7
 	m_physXWorld->ShutDown();
 
-	//5
+	//6
 	//m_renderer->ShutDown();
+
+	//5
+	//m_componentManager->ShutDown();
 
 	//4
 	m_meshManager->ShutDown();

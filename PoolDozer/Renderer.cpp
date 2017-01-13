@@ -102,6 +102,8 @@ void CRenderer::Draw(CEntity * entity)
 
 }
 
+
+//this will be moved to draw scene method
 void CRenderer::ClearBuffer()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -112,3 +114,9 @@ void CRenderer::ClearBuffer()
 	glCullFace(GL_BACK);
 	glDisable(GL_TEXTURE_2D);
 }
+
+void CRenderer::SwapBuffer(GLFWwindow* window)
+{
+	glfwSwapBuffers(window);
+}
+
