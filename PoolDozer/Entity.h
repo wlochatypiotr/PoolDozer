@@ -18,7 +18,7 @@ class CEntity
 {
 public:
 	using entity_id_t = std::string;
-	CEntity(const entity_id_t& id);
+	CEntity(const entity_id_t& id, bool isActive = true);
 
 	const Transform& GetTransform() const;
 	void SetTransform(const Transform& xform);
@@ -29,6 +29,8 @@ public:
 	void SetScale(const float& uniformScale);
 	const entity_id_t& GetID() const;
 	void SetID(const entity_id_t& id);
+	bool IsActive();
+	void SetActive(bool activationState);
 
 	//This function will update all Entity components
 	//TODO: 
@@ -42,6 +44,7 @@ public:
 private:
 	Transform m_transform;
 	entity_id_t m_entityID;
+	bool m_isActive;
 
 	using componentTableType = std::map<const entity_component_id_t, CEntityComponent* >;
 	componentTableType m_components; //map of all the components;

@@ -45,7 +45,7 @@ bool CEngine::StartUp()
 	//8 
 	//Init world
 	m_world = std::make_unique<CWorld>();
-	m_world->Initialize(GetComponentManager(), GetRenderer());
+	m_world->Initialize(GetComponentManager());
 
 	return false;
 }

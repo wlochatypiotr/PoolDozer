@@ -103,6 +103,29 @@ void CRenderer::Draw(CEntity * entity)
 }
 
 
+void CRenderer::Draw(CScene * scene)
+{
+	if (scene->IsActive()) {
+		using iterator_t = std::unordered_map <entity_id_t, std::unique_ptr<CEntity> >::const_iterator;
+		for (iterator_t iter = scene->GetEntities().cbegin(); iter != scene->GetEntities().cend(); ++iter)
+		{
+				Draw(iter->second.get());
+		}
+	}
+
+}
+
+void CRenderer::Draw(CWorld * world)
+{
+	ClearBuffer();
+	using iterator_t = std::unordered_map <scene_id, std::unique_ptr<CScene> >::const_iterator;
+		for (iterator_t iter = world->GetLevels().cbegin(); iter != world->GetLevels().cend(); ++iter)
+		{
+			Draw(iter->second.get());
+		}
+	SwapBuffer();
+}
+
 //this will be moved to draw scene method
 void CRenderer::ClearBuffer()
 {
@@ -115,8 +138,8 @@ void CRenderer::ClearBuffer()
 	glDisable(GL_TEXTURE_2D);
 }
 
-void CRenderer::SwapBuffer(GLFWwindow* window)
+void CRenderer::SwapBuffer()
 {
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(m_windowManager->GetWindow());
 }
 

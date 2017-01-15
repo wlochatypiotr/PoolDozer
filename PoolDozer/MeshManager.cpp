@@ -42,6 +42,7 @@ void CMeshManager::Clear()
 
 void CMeshManager::Initialize()
 {
-	Load("MCube", "models/Cube.obj");
-	Load("MTable", "models/PoolTable.obj");
+	Load("mesh_cube", "models/Cube.obj");
+	Load("mesh_table", "models/PoolTable.obj");
+	Load("mesh_dozer", "models/Dozer.obj");
 }

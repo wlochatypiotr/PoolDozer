@@ -1,8 +1,7 @@
 #pragma once
 #include "glm/gtc/type_ptr.hpp"
-#include "Entity.h"
 #include "WindowManager.h"
-//#include "World.h"
+#include "World.h"
 using namespace glm;
 
 class CRenderer
@@ -32,9 +31,10 @@ public:
 
 
 	void Draw(CEntity * entity);
-	//void Draw(CWorld * world);
+	void Draw(CWorld * world);
+	void Draw(CScene * scene);
 	void ClearBuffer();
-	void SwapBuffer(GLFWwindow* window);
+	void SwapBuffer();
 private:
 	//overloads on DrawComponent
 	void DrawComponent(CECVisualMesh* mesh);

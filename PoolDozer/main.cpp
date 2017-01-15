@@ -1,12 +1,10 @@
-//#include "Configuration.h"
-//#include "Scene.h"
-//#include "World.h"
 #include "Engine.h"
 
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
+//TODO: add default position, rotation scale etc. values foe entities
 int main()
 {
 	CEngine engine;
@@ -26,39 +24,53 @@ int main()
 	CWorld* world = engine.GetWorld();
 
 	//Create new scene and populate it
-	CScene* scene = world->AddScene("level1");
+	CScene* scene = world->AddScene("level_1");
 
-	scene->AddNewEntity("Elamp");
-	scene->AddNewEntity("Etable");
+	scene->AddNewEntity("entity_lamp");
+	scene->AddNewEntity("entity_table");
+	scene->AddNewEntity("entity_dozer");
 	
 	/////////////////////////3//////////////////////////////
-	world->AddComponent("CcubeMesh", MESH_COMPONENT);
-	world->AddComponent("CtableMesh", MESH_COMPONENT);
+	world->AddComponent("component_mesh_cube", MESH_COMPONENT);
+	world->AddComponent("component_mesh_table", MESH_COMPONENT);
+	world->AddComponent("component_mesh_dozer", MESH_COMPONENT);
+
 
 	//////////////////////////4/////////////////////////////
-	CECVisualMesh* lampcomp = static_cast<CECVisualMesh*>(world->GetComponent("CcubeMesh"));
-	CECVisualMesh* tablecomp = static_cast<CECVisualMesh*>(world->GetComponent("CtableMesh"));
+	CECVisualMesh* lampcomp = static_cast<CECVisualMesh*>(world->GetComponent("component_mesh_cube"));
+	CECVisualMesh* tablecomp = static_cast<CECVisualMesh*>(world->GetComponent("component_mesh_table"));
+	CECVisualMesh* dozercomp = static_cast<CECVisualMesh*>(world->GetComponent("component_mesh_dozer"));
 
 	lampcomp->SetColor(1.0f, 0.5f, 0.5f);
 	lampcomp->SetProgram(engine.GetShaderManager()->Get(0));
-	lampcomp->SetMesh(engine.GetMeshManager()->Get("MCube"));
+	lampcomp->SetMesh(engine.GetMeshManager()->Get("mesh_cube"));
 
 	tablecomp->SetColor(0.5f, 0.5f, 0.5f);
 	tablecomp->SetProgram(engine.GetShaderManager()->Get(1));
-	tablecomp->SetMesh(engine.GetMeshManager()->Get("MTable"));
+	tablecomp->SetMesh(engine.GetMeshManager()->Get("mesh_table"));
+
+	dozercomp->SetColor(1.0f, 1.0f, 1.0f);
+	dozercomp->SetProgram(engine.GetShaderManager()->Get(1));
+	dozercomp->SetMesh(engine.GetMeshManager()->Get("mesh_dozer"));
 
 	////////////////////////////5//////////////////////////
-	CEntity* lamp = scene->GetEntity("Elamp");
-	lamp->SetPosition(glm::vec3(0.0f, 1.0f, -5.0f));
+	CEntity* lamp = scene->GetEntity("entity_lamp");
+	lamp->SetPosition(glm::vec3(0.0f, 0.5f, -6.0f));
 	lamp->SetRotation(0.0f, 0.0f, 0.0f);
 	lamp->SetScale(0.5f);
 	lamp->SetEntityComponent(lampcomp);
 
-	CEntity* table = scene->GetEntity("Etable");
+	CEntity* table = scene->GetEntity("entity_table");
 	table->SetPosition(glm::vec3(0.0f, -1.0f, -1.40f));
 	table->SetRotation(0.0f, 0.0f, 0.0f);
 	table->SetScale(1.0f);
 	table->SetEntityComponent(tablecomp);
+
+	CEntity* dozer = scene->GetEntity("entity_dozer");
+	dozer->SetPosition(glm::vec3(0.0f, -0.8f, -1.40f));
+	dozer->SetRotation(0.0f, 0.0f, 0.0f);
+	dozer->SetScale(0.2f);
+	dozer->SetEntityComponent(dozercomp);
 
 	//main loop
 	while (!glfwWindowShouldClose(engine.GetWindowManager()->GetWindow()))
@@ -71,10 +83,9 @@ int main()
 		// process events
 		engine.GetInputManager()->ProcessInput();
 		world->Update();
-		world->Draw();
 
-		//this should get called by renderer after scene render call
-		glfwSwapBuffers(engine.GetWindowManager()->GetWindow());
+		//submit to renderer
+		engine.GetRenderer()->Draw(world);
 	}
 	engine.ShutDown();
 

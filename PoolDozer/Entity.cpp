@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-CEntity::CEntity(const entity_id_t & id) : m_entityID(id)
+CEntity::CEntity(const entity_id_t & id, bool isActive) : m_entityID(id), m_isActive(isActive)
 {
 }
 
@@ -53,12 +53,25 @@ void CEntity::SetID(const entity_id_t& id)
 	m_entityID = id;
 }
 
+bool CEntity::IsActive()
+{
+	return m_isActive;
+}
+
+void CEntity::SetActive(bool activationState)
+{
+	m_isActive = activationState;
+}
+
 void CEntity::Update()
 {
-	using iterator_t = std::map<const entity_component_id_t, CEntityComponent* >::iterator;
-	for (iterator_t it = m_components.begin(); it != m_components.end(); ++it)
+	if (m_isActive)
 	{
-		it->second->Update();
+		using iterator_t = std::map<const entity_component_id_t, CEntityComponent* >::iterator;
+		for (iterator_t it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			it->second->Update();
+		}
 	}
 }
 
