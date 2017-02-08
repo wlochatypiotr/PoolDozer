@@ -117,19 +117,34 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\FS.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\LampShader.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\SimpleFS.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\SimpleVS.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\VS.frag">
+    <None Include="RGB2HSV_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="HSV2RGB_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="YCbCr2RGB_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="RGB2YCbCr_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ShiftSaturation_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\Phong_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\Phong_VS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ColorOnly_FS.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

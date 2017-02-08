@@ -21,7 +21,8 @@ public:
 		PROJECTION_MATRIX_4X4 = 5,
 		OBJECT_COLOR_VEC3 = 6,
 		LIGHT_COLOR_VEC3 = 7,
-		LIGHT_POS_VEC3 = 8
+		LIGHT_POS_VEC3 = 8,
+		CAMERA_POS_VEC3 = 9
 	};
 
 	void Initialize(const Shader& shader, CWindowManager * mgr);

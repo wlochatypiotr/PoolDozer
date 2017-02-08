@@ -199,11 +199,16 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\FS.frag" />
-    <None Include="shaders\LampShader.frag" />
+    <None Include="HSV2RGB_FS.frag" />
+    <None Include="RGB2HSV_FS.frag" />
+    <None Include="RGB2YCbCr_FS.frag" />
+    <None Include="shaders\Phong_FS.frag" />
+    <None Include="shaders\ColorOnly_FS.frag" />
     <None Include="shaders\SimpleFS.frag" />
     <None Include="shaders\SimpleVS.frag" />
-    <None Include="shaders\VS.frag" />
+    <None Include="shaders\Phong_VS.frag" />
+    <None Include="ShiftSaturation_FS.frag" />
+    <None Include="YCbCr2RGB_FS.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

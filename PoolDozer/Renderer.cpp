@@ -60,7 +60,10 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 	
 	//this uniform have use for object lightning
 	//hardcoded light position
-	glUniform3f(EUniformEnum::LIGHT_POS_VEC3, 0.0f,1.0f, -5.0f);
+	glUniform3f(EUniformEnum::LIGHT_POS_VEC3, 0.0f, 1.0, 1.0f);
+
+	//hardcoded camera position, need to be updated
+	glUniform3f(CAMERA_POS_VEC3, 0.0f, 0.0f, 0.0f);
 
 
 	for (MeshStruct c : meshComponent->GetMesh()->GetMeshData())

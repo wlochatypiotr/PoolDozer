@@ -69,7 +69,7 @@ int main()
 	CEntity* dozer = scene->GetEntity("entity_dozer");
 	dozer->SetPosition(glm::vec3(0.0f, -0.8f, -1.40f));
 	dozer->SetRotation(0.0f, 0.0f, 0.0f);
-	dozer->SetScale(0.2f);
+	dozer->SetScale(0.1f);
 	dozer->SetEntityComponent(dozercomp);
 
 	//main loop
