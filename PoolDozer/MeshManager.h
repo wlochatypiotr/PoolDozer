@@ -1,23 +1,23 @@
 #pragma once
-#include "Mesh.h"
+#include "Model.h"
 #include <unordered_map>
 #include <memory>
 
-using mesh_id_t = std::string;
+using model_id_t = std::string;
 
-class CMeshManager
+class CModelManager
 {
 public:
-	CMeshManager(const CMeshManager&) = delete;
-	CMeshManager& operator=(const CMeshManager&) = delete;
-	CMeshManager();
-	~CMeshManager();
+	CModelManager(const CModelManager&) = delete;
+	CModelManager& operator=(const CModelManager&) = delete;
+	CModelManager();
+	~CModelManager();
 
-	CMesh* Get(mesh_id_t id);
-	bool Load(mesh_id_t id, mesh_id_t filename);
+	CModel* Get(model_id_t id);
+	bool Load(model_id_t id, model_id_t filename);
 	void ShutDown();
 	void Clear();
 	void Initialize();
 private:
-	std::unordered_map <mesh_id_t, std::unique_ptr<CMesh> > m_map;
+	std::unordered_map <model_id_t, std::unique_ptr<CModel> > m_map;
 };

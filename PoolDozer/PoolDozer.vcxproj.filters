@@ -44,9 +44,6 @@
     <ClCompile Include="EntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Loaders</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -64,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +91,6 @@
     <ClInclude Include="Engine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Loaders</Filter>
-    </ClInclude>
     <ClInclude Include="MeshManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -114,6 +114,18 @@
     </ClInclude>
     <ClInclude Include="ComponentManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +157,21 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\ColorOnly_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\HSV2RGB_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\RGB2HSV_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\RGB2YCbCr_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ShiftSaturation_FS.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\YCbCr2RGB_FS.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

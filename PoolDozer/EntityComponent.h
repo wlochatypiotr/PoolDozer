@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include "Model.h"
 #include "ShaderLoader.h"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -78,8 +78,8 @@ public:
 		return entity_component_id_t("ECVisualMesh");
 	}
 
-	void SetMesh(CMesh* meshptr);
-	CMesh* GetMesh();
+	void SetMesh(CModel* meshptr);
+	CModel* GetModel();
 private:
-	CMesh * mp_mesh;
+	CModel * mp_mesh;
 };

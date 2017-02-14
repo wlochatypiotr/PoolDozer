@@ -13,19 +13,22 @@ bool CEngine::StartUp()
 {
 	//1
 	//init windowManager
+	GLuint ret = glGetError();
 	m_windowManager = std::make_unique<CWindowManager>();
-	m_windowManager->Initialize(3, 3, 1366, 766);
+	m_windowManager->Initialize(4, 3, 1366, 766);
+	ret = glGetError();
 	//2
 	//init input manager - move to initialize
 	m_inputManager = std::make_unique<CInputManager>();
 	m_inputManager->Initialize(m_windowManager->GetWindow());
+	ret = glGetError();
 	//3
 	//init shader mgr and load shaders in Initialize method
 	m_shaderManager = std::make_unique<CShaderManager>();
 	m_shaderManager->Initialize();
 	//4
 	//init MeshManager and load some meshes
-	m_meshManager = std::make_unique<CMeshManager>();
+	m_meshManager = std::make_unique<CModelManager>();
 	m_meshManager->Initialize();
 
 	//5

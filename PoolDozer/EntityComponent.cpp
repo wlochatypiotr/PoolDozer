@@ -44,13 +44,13 @@ void CECVisual::SetProgram(Shader &program)
 }
 
 
-void CECVisualMesh::SetMesh(CMesh* meshptr)
+void CECVisualMesh::SetMesh(CModel* meshptr)
 {
 
 	mp_mesh = meshptr;
 	
 }
-CMesh * CECVisualMesh::GetMesh()
+CModel * CECVisualMesh::GetModel()
 {
 	return mp_mesh;
 }

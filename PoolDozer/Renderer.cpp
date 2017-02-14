@@ -42,10 +42,17 @@ void CRenderer::SetProgram(const Shader & shader)
 
 void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 {
+	GLuint program;
 	if (meshComponent->m_program != nullptr)
+	{
 		glUseProgram(meshComponent->m_program->Program);
+		program = meshComponent->m_program->Program;
+	}
 	else
+	{
 		glUseProgram(m_program.Program);
+		program = m_program.Program;
+	}
 
 	//hardcoede matrix uniform location
 	glUniformMatrix4fv(EUniformEnum::MODEL_MATRIX_4X4, 1, GL_FALSE, glm::value_ptr(meshComponent->m_model));
@@ -56,21 +63,49 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 
 	//this uniform have use for light source
 	//hardcoded light value
-	glUniform3f(EUniformEnum::LIGHT_COLOR_VEC3, 1.0f, 1.0f, 1.0f);
+	//glUniform3f(EUniformEnum::LIGHT_COLOR_VEC3, 1.0f, 1.0f, 1.0f);
 	
 	//this uniform have use for object lightning
 	//hardcoded light position
-	glUniform3f(EUniformEnum::LIGHT_POS_VEC3, 0.0f, 1.0, 1.0f);
+	//glUniform3f(EUniformEnum::LIGHT_POS_VEC3, 2 *sin(glfwGetTime()), 1.0, 1.0f);
 
 	//hardcoded camera position, need to be updated
 	glUniform3f(CAMERA_POS_VEC3, 0.0f, 0.0f, 0.0f);
 
+	//setup material
+	GLint matAmbientLoc = glGetUniformLocation(program, "u_material.ambient");
+	GLint matDiffuseLoc = glGetUniformLocation(program, "u_material.diffuse");
+	GLint matSpecularLoc = glGetUniformLocation(program, "u_material.specular");
+	GLint matShineLoc = glGetUniformLocation(program, "u_material.shininess");
 
-	for (MeshStruct c : meshComponent->GetMesh()->GetMeshData())
+	glUniform3f(matAmbientLoc, 0.0f, 0.1f, 0.06f);
+	glUniform3f(matDiffuseLoc, 0.0f, 0.50980392f, 0.50980392f);
+	glUniform3f(matSpecularLoc, 0.50196078f, 0.50196078f, 0.50196078f);
+	glUniform1f(matShineLoc, 16.0f);
+
+	//setup light
+	GLint lightAmbientLoc = glGetUniformLocation(program, "u_light.ambient");
+	GLint lightDiffuseLoc = glGetUniformLocation(program, "u_light.diffuse");
+	GLint lightSpecularLoc = glGetUniformLocation(program, "u_light.specular");
+	GLint ligtPositionLoc = glGetUniformLocation(program, "u_light.position");
+
+	glUniform3f(lightAmbientLoc, 0.2f, 0.2f, 0.2f);
+	glUniform3f(lightDiffuseLoc, 1.0f, 1.0f, 1.0f); 
+	glUniform3f(lightSpecularLoc, 1.0f, 1.0f, 1.0f);
+	glUniform3f(ligtPositionLoc, 3 * sin(glfwGetTime()), 3.0f, 2.0f);
+
+	for (const CMesh& c : meshComponent->GetModel()->GetMeshes())
 	{
-		glBindVertexArray(c.VAO);
-
-		glDrawElements(GL_TRIANGLES, c.numIndices, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(c.m_mesh.VAO);
+		if (m_isTexturingEnabled && !c.m_textures.empty())
+		{
+			//glBindTexture(GL_TEXTURE_2D, c.m_textures.at(0).id);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, c.m_textures.at(0).id);
+			auto diff = glGetUniformLocation(meshComponent->m_program->Program, "texture_diffuse");
+			glUniform1i(diff, 0);
+		}
+		glDrawElements(GL_TRIANGLES, c.m_mesh.numIndices, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 	glUseProgram(0);
@@ -129,6 +164,11 @@ void CRenderer::Draw(CWorld * world)
 	SwapBuffer();
 }
 
+void CRenderer::EnableTexturing(bool flag)
+{
+	m_isTexturingEnabled = flag;
+}
+
 //this will be moved to draw scene method
 void CRenderer::ClearBuffer()
 {
@@ -138,7 +178,6 @@ void CRenderer::ClearBuffer()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glDisable(GL_TEXTURE_2D);
 }
 
 void CRenderer::SwapBuffer()

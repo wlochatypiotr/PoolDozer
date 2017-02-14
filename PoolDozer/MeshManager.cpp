@@ -1,25 +1,25 @@
 #include "MeshManager.h"
 
-CMeshManager::CMeshManager() 
+CModelManager::CModelManager() 
 {
 
 }
 
-CMeshManager::~CMeshManager()
+CModelManager::~CModelManager()
 {
 
 }
 
 //will throw exception if no such element exists
-CMesh * CMeshManager::Get(mesh_id_t id)
+CModel * CModelManager::Get(model_id_t id)
 {
 	return m_map.at(id).get();
 }
 
-bool CMeshManager::Load(mesh_id_t id, mesh_id_t filename)
+bool CModelManager::Load(model_id_t id, model_id_t filename)
 {
-	std::unique_ptr<CMesh> pmesh = std::make_unique<CMesh>();
-	bool ret = pmesh->LoadMesh(filename);
+	std::unique_ptr<CModel> pmesh = std::make_unique<CModel>();
+	bool ret = pmesh->LoadModel(filename);
 	if (ret)
 		printf("Mesh %s loaded successfully\n", filename.c_str());
 	else
@@ -30,19 +30,19 @@ bool CMeshManager::Load(mesh_id_t id, mesh_id_t filename)
 	return ret;
 }
 
-void CMeshManager::ShutDown()
+void CModelManager::ShutDown()
 {
 	Clear();
 }
 
-void CMeshManager::Clear()
+void CModelManager::Clear()
 {
 	m_map.clear();
 }
 
-void CMeshManager::Initialize()
+void CModelManager::Initialize()
 {
 	Load("mesh_cube", "models/Cube.obj");
 	Load("mesh_table", "models/PoolTable.obj");
-	Load("mesh_dozer", "models/Dozer.obj");
+	Load("mesh_dozer", "models/nanosuit.obj");
 }

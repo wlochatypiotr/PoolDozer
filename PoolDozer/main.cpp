@@ -1,5 +1,9 @@
 #include "Engine.h"
-
+//#include "Model.h"
+//TODO:
+//transform CMesh to CModel containing meshes
+//load textures and store them in TextureManager
+//adapt shaders to use of textures
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -9,7 +13,7 @@ int main()
 {
 	CEngine engine;
 	engine.StartUp();
-	
+
 	//1. Load models using MeshManager
 	//2. Create Entity (or use manager(world) in future)
 	//3. Create EntityComponent
@@ -69,10 +73,11 @@ int main()
 	CEntity* dozer = scene->GetEntity("entity_dozer");
 	dozer->SetPosition(glm::vec3(0.0f, -0.8f, -1.40f));
 	dozer->SetRotation(0.0f, 0.0f, 0.0f);
-	dozer->SetScale(0.1f);
+	dozer->SetScale(0.07f);
 	dozer->SetEntityComponent(dozercomp);
 
 	//main loop
+	//engine.GetRenderer()->EnableTexturing(false);
 	while (!glfwWindowShouldClose(engine.GetWindowManager()->GetWindow()))
 	{
 		// Get frame time

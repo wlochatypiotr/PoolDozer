@@ -34,11 +34,14 @@ public:
 	void Draw(CEntity * entity);
 	void Draw(CWorld * world);
 	void Draw(CScene * scene);
+	void EnableTexturing(bool flag);
 	void ClearBuffer();
 	void SwapBuffer();
 private:
 	//overloads on DrawComponent
 	void DrawComponent(CECVisualMesh* mesh);
+	bool m_isTexturingEnabled = true;
+	//void DrawComponent(Model& model);
 	mat4 m_view;// = nullptr;
 	mat4 m_projection;// = nullptr;
 	Shader m_program;
