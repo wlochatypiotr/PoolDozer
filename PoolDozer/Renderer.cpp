@@ -21,6 +21,11 @@ void CRenderer::Initialize(const Shader& shader, CWindowManager * mgr)
 
 	//set default shader
 	SetProgram(shader);
+
+	//setup some GL options
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 void CRenderer::SetViewMatrix(const mat4& view)
@@ -73,13 +78,13 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 	glUniform3f(CAMERA_POS_VEC3, 0.0f, 0.0f, 0.0f);
 
 	//setup material
-	GLint matAmbientLoc = glGetUniformLocation(program, "u_material.ambient");
-	GLint matDiffuseLoc = glGetUniformLocation(program, "u_material.diffuse");
+	//GLint matAmbientLoc = glGetUniformLocation(program, "u_material.ambient");
+	//GLint matDiffuseLoc = glGetUniformLocation(program, "u_material.diffuse");
 	GLint matSpecularLoc = glGetUniformLocation(program, "u_material.specular");
 	GLint matShineLoc = glGetUniformLocation(program, "u_material.shininess");
 
-	glUniform3f(matAmbientLoc, 0.0f, 0.1f, 0.06f);
-	glUniform3f(matDiffuseLoc, 0.0f, 0.50980392f, 0.50980392f);
+	//glUniform3f(matAmbientLoc, 0.0f, 0.1f, 0.06f);
+	//glUniform3f(matDiffuseLoc, 0.0f, 0.50980392f, 0.50980392f);
 	glUniform3f(matSpecularLoc, 0.50196078f, 0.50196078f, 0.50196078f);
 	glUniform1f(matShineLoc, 16.0f);
 
@@ -96,15 +101,29 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 
 	for (const CMesh& c : meshComponent->GetModel()->GetMeshes())
 	{
-		glBindVertexArray(c.m_mesh.VAO);
-		if (m_isTexturingEnabled && !c.m_textures.empty())
+		//if mesh has textures use them as material
+		if (m_isTexturingEnabled && c.HasTextures())
 		{
-			//glBindTexture(GL_TEXTURE_2D, c.m_textures.at(0).id);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, c.m_textures.at(0).id);
-			auto diff = glGetUniformLocation(meshComponent->m_program->Program, "texture_diffuse");
-			glUniform1i(diff, 0);
+			GLuint diffuseNr = 1;
+			GLuint specularNr = 1;
+			for (GLuint i = 0; i < c.m_textures.size(); ++i)
+			{
+				std::stringstream ss;
+				std::string number;
+				std::string name = c.m_textures.at(i).type;
+				if (name == "texture_diffuse")
+					ss << diffuseNr++;
+				else if (name == "texture_specular")
+					ss << specularNr++;
+				number = ss.str();
+
+				glUniform1f(glGetUniformLocation(program, ("u_material." + name + number).c_str()), i);
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, c.m_textures.at(i).id);
+			}
+
 		}
+		glBindVertexArray(c.m_mesh.VAO);
 		glDrawElements(GL_TRIANGLES, c.m_mesh.numIndices, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
@@ -147,6 +166,7 @@ void CRenderer::Draw(CScene * scene)
 		using iterator_t = std::unordered_map <entity_id_t, std::unique_ptr<CEntity> >::const_iterator;
 		for (iterator_t iter = scene->GetEntities().cbegin(); iter != scene->GetEntities().cend(); ++iter)
 		{
+			if(iter->second.get()->IsVisible())
 				Draw(iter->second.get());
 		}
 	}
@@ -175,9 +195,6 @@ void CRenderer::ClearBuffer()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, m_windowManager->GetWindowWidth(), m_windowManager->GetWindowHeight());
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
 }
 
 void CRenderer::SwapBuffer()

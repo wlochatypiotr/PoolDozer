@@ -51,6 +51,7 @@ public:
 	std::vector<vertexData> m_vertices;
 	std::vector<unsigned int> m_indices;
 	std::vector<TextureStruct> m_textures;
+	bool HasTextures() const { return !m_textures.empty(); }
 	MeshStruct m_mesh;
 private:
 	bool LoadMeshToOpenGL();

@@ -11,7 +11,6 @@ bool CModel::LoadModel(const std::string & PathToFile)
 
 	const aiScene* pScene = Importer.ReadFile(PathToFile.c_str(), aiProcess_Triangulate | 
 																aiProcess_GenSmoothNormals | 
-																aiProcess_FlipUVs | 
 																aiProcess_JoinIdenticalVertices);
 	bool ret;
 	if (pScene) {
@@ -71,13 +70,24 @@ bool CModel::LoadModel(const std::string & PathToFile)
 			if (currMesh->mMaterialIndex >= 0)
 			{
 				aiMaterial* material = pScene->mMaterials[currMesh->mMaterialIndex];
+
+				//todo: extract default material from mesh
+
+				//aiColor4D diffuse;
+				//aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuse);
+				//color4<float> color = color4<float>(1.0f, 1.0f, 1.0f, 1.0f);
+				//aiColor4D diffuse;
+				//if (AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
+				//	color = color4<float>(diffuse.r, diffuse.g, diffuse.b, diffuse.a);
+				//colors.push_back(color);
+
 				// We assume a convention for sampler names in the shaders. Each diffuse texture should be named
 				// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
 				// Same applies to other texture as the following list summarizes:
 				// Diffuse: texture_diffuseN
 				// Specular: texture_specularN
 				// Normal: texture_normalN
-
+				//material->mProperties->
 				// 1. Diffuse maps
 				std::vector<TextureStruct> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 				meshTextures.insert(meshTextures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -168,6 +178,7 @@ GLuint CModel::LoadTextureFromFile(const char * path, std::string directory)
 	if (!image)
 		std::cout << "Texture " << filename << "loading failed" << std::endl;
 
+	image = FreeImage_ConvertTo24Bits(image);
 	auto bits = FreeImage_GetBits(image);
 	unsigned int width, height;
 	width = FreeImage_GetWidth(image);
@@ -176,12 +187,16 @@ GLuint CModel::LoadTextureFromFile(const char * path, std::string directory)
 	if ((bits == 0) || (width == 0) || (height == 0))
 		std::cout << "Texture loading somehow failed :P" << std::endl;
 
+	//FreeImage_Save(fif, image, "test");
+	auto dis = FreeImage_GetBPP(image);
+	std::cout << "Texture has RGB format" << dis <<std::endl;
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 
 	// Assign texture to ID
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bits);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, bits);
+
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	// Parameters

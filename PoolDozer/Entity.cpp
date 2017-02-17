@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-CEntity::CEntity(const entity_id_t & id, bool isActive) : m_entityID(id), m_isActive(isActive)
+CEntity::CEntity(const entity_id_t & id,bool isVisible , bool isActive) : m_entityID(id), m_isVisible(isVisible), m_isActive(isActive)
 {
 }
 
@@ -58,10 +58,10 @@ bool CEntity::IsActive()
 	return m_isActive;
 }
 
-void CEntity::SetActive(bool activationState)
-{
-	m_isActive = activationState;
-}
+//void CEntity::SetActive(bool activationState)
+//{
+//	m_isActive = activationState;
+//}
 
 void CEntity::Update()
 {

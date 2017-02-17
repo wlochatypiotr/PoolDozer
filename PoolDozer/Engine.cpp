@@ -15,7 +15,7 @@ bool CEngine::StartUp()
 	//init windowManager
 	GLuint ret = glGetError();
 	m_windowManager = std::make_unique<CWindowManager>();
-	m_windowManager->Initialize(4, 3, 1366, 766);
+	m_windowManager->Initialize(3, 3, 1366, 766);
 	ret = glGetError();
 	//2
 	//init input manager - move to initialize

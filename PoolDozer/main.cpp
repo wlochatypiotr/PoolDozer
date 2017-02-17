@@ -63,6 +63,7 @@ int main()
 	lamp->SetRotation(0.0f, 0.0f, 0.0f);
 	lamp->SetScale(0.5f);
 	lamp->SetEntityComponent(lampcomp);
+	lamp->SetVisible(false);
 
 	CEntity* table = scene->GetEntity("entity_table");
 	table->SetPosition(glm::vec3(0.0f, -1.0f, -1.40f));
@@ -71,7 +72,7 @@ int main()
 	table->SetEntityComponent(tablecomp);
 
 	CEntity* dozer = scene->GetEntity("entity_dozer");
-	dozer->SetPosition(glm::vec3(0.0f, -0.8f, -1.40f));
+	dozer->SetPosition(glm::vec3(0.0f, -0.8f, 2.20f));
 	dozer->SetRotation(0.0f, 0.0f, 0.0f);
 	dozer->SetScale(0.07f);
 	dozer->SetEntityComponent(dozercomp);
