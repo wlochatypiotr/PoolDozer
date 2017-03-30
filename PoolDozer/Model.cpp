@@ -67,7 +67,7 @@ bool CModel::LoadModel(const std::string & PathToFile)
 			}
 			//load materials
 			std::vector<TextureStruct> meshTextures;
-			if (currMesh->mMaterialIndex >= 0)
+			if (currMesh->mMaterialIndex > 0)
 			{
 				aiMaterial* material = pScene->mMaterials[currMesh->mMaterialIndex];
 
