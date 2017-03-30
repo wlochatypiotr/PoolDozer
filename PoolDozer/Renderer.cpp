@@ -117,7 +117,7 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 					ss << specularNr++;
 				number = ss.str();
 
-				glUniform1f(glGetUniformLocation(program, ("u_material." + name + number).c_str()), i);
+				glUniform1i(glGetUniformLocation(program, ("u_material." + name + number).c_str()), i);
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, c.m_textures.at(i).id);
 			}
