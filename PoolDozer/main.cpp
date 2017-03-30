@@ -77,6 +77,14 @@ int main()
 	dozer->SetScale(0.07f);
 	dozer->SetEntityComponent(dozercomp);
 
+	// c-constructor ?
+	//set owning entity ?
+	//scene->AddNewEntity("dozer_copy", dozer);
+	//dozer->SetVisible(false);
+	//CEntity nanosuitCopy(*dozer);
+	//nanosuitCopy.SetID("nanosuit");
+	//nanosuitCopy.SetPosition(glm::vec3(1.0f, -0.8f, 2.20f));
+
 	//main loop
 	//engine.GetRenderer()->EnableTexturing(false);
 	while (!glfwWindowShouldClose(engine.GetWindowManager()->GetWindow()))

@@ -89,6 +89,7 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 	glUniform1f(matShineLoc, 16.0f);
 
 	//setup light
+	GLint lightDirectionLoc = glGetUniformLocation(program, "u_light.direction");
 	GLint lightAmbientLoc = glGetUniformLocation(program, "u_light.ambient");
 	GLint lightDiffuseLoc = glGetUniformLocation(program, "u_light.diffuse");
 	GLint lightSpecularLoc = glGetUniformLocation(program, "u_light.specular");
@@ -98,6 +99,9 @@ void CRenderer::DrawComponent(CECVisualMesh * meshComponent)
 	glUniform3f(lightDiffuseLoc, 1.0f, 1.0f, 1.0f); 
 	glUniform3f(lightSpecularLoc, 1.0f, 1.0f, 1.0f);
 	glUniform3f(ligtPositionLoc, 3 * sin(glfwGetTime()), 3.0f, 2.0f);
+	//directional light
+	glUniform3f(lightDirectionLoc, 3 * sin(glfwGetTime()), 3.0f, -2.0f);
+
 
 	for (const CMesh& c : meshComponent->GetModel()->GetMeshes())
 	{

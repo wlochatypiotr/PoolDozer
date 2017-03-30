@@ -12,13 +12,25 @@ struct Transform {
 	vec3 m_position;
 	vec3 m_rotation; // x, y, z rotations
 	vec3 m_scale;
+	Transform() 
+	{
+	}
+	Transform(const Transform & rhs)
+	{
+		this->m_position = rhs.m_position;
+		this->m_rotation = rhs.m_rotation;
+		this->m_scale = rhs.m_scale;
+	}
 };
 
 class CEntity
 {
+	friend class CScene;
 public:
 	using entity_id_t = std::string;
 	CEntity(const entity_id_t& id, bool isVisible = true ,bool isActive = true);
+	//hoe copy c should work ?!
+	CEntity(const CEntity & rhs);
 
 	const Transform& GetTransform() const;
 	void SetTransform(const Transform& xform);
@@ -54,6 +66,8 @@ private:
 	bool m_isVisible;
 	bool m_isActive;
 
+	//for CEntity copy constructor
+	static int m_counter;
 
 	using componentTableType = std::map<const entity_component_id_t, CEntityComponent* >;
 	componentTableType m_components; //map of all the components;

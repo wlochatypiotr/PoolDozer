@@ -1,7 +1,18 @@
 #include "Entity.h"
 
+int CEntity::m_counter = 1;
+
 CEntity::CEntity(const entity_id_t & id,bool isVisible , bool isActive) : m_entityID(id), m_isVisible(isVisible), m_isActive(isActive)
 {
+}
+
+CEntity::CEntity(const CEntity & rhs)
+{
+	this->m_transform = rhs.m_transform;
+	this->m_entityID = rhs.m_entityID;
+	this->m_isVisible = rhs.m_isVisible;
+	this->m_isActive = rhs.m_isActive;
+	this->m_components = rhs.m_components;
 }
 
 const Transform& CEntity::GetTransform() const

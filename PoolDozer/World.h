@@ -19,6 +19,7 @@ public:
 	CEntity* GetEntity(const entity_id_t& id);
 	CEntityComponent* GetComponent(const entity_component_id_t& id);
 	void AddNewEntity(const entity_id_t& id);
+	void AddNewEntity(const entity_id_t& id, CEntity * copy);
 	void AddComponent(const entity_component_id_t& id, EComponentTypeEnum type);
 	void SetActive(bool activationState);
 	bool IsActive();

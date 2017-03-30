@@ -26,6 +26,17 @@ void CScene::AddNewEntity(const entity_id_t & id)
 	m_entities.emplace(id, std::move(entity));
 }
 
+
+
+void CScene::AddNewEntity(const entity_id_t& id, CEntity * copy)
+{
+	std::unique_ptr<CEntity> entity = std::make_unique<CEntity>(id);
+	entity.get()->m_transform = copy->m_transform;
+	entity.get()->m_isVisible = copy->m_isVisible;
+	entity.get()->m_isActive = copy->m_isActive;
+	entity.get()->m_components = copy->m_components;
+}
+
 void CScene::AddComponent(const entity_component_id_t& id, EComponentTypeEnum type)
 {
 	m_world->AddComponent(id, type);
